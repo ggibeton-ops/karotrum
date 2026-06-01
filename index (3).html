@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>🎤 KaroTrum</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0d0d0f;
+      --bg2:         #15151a;
+      --bg3:         #1c1c24;
+      --border:      #2a2a36;
+      --text:        #e8e8f0;
+      --muted:       #6b6b80;
+      --accent:      #f7c948;
+      --accent2:     #ff6b35;
+      --wait-bg:     #15151a;
+      --wait-border: #2a2a36;
+      --wait-pill-bg:#3a3a48;
+      --wait-pill-t: #9090a8;
+      --done-bg:     #0d1f13;
+      --done-border: #1a4028;
+      --done-pill-bg:#0f3d20;
+      --done-pill-t: #4cdf80;
+      --done-check:  #4cdf80;
+      --radius:      14px;
+      --font-display:'Bebas Neue', sans-serif;
+      --font-body:   'DM Sans', sans-serif;
+    }
+
+    html, body {
+      height: 100%; background: var(--bg); color: var(--text);
+      font-family: var(--font-body); font-size: 16px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #app { max-width: 640px; margin: 0 auto; padding: 0 0 100px; min-height: 100%; }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    header h1 {
+      font-family: var(--font-display); font-size: 2rem;
+      letter-spacing: 2px; color: var(--accent); line-height: 1;
+    }
+    .badge-count {
+      background: var(--accent2); color: #fff; font-weight: 600; font-size: 0.85rem;
+      border-radius: 20px; padding: 3px 10px; min-width: 36px; text-align: center;
+    }
+
+    /* Sync indicator */
+    #sync-status {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.75rem; font-weight: 600; color: var(--muted);
+      padding: 4px 10px; border-radius: 20px;
+      background: var(--bg3); border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    #sync-status .dot {
+      width: 7px; height: 7px; border-radius: 50%; background: var(--muted);
+      transition: background 0.3s;
+    }
+    #sync-status.synced  .dot { background: var(--done-check); }
+    #sync-status.syncing .dot { background: var(--accent); animation: pulse 1s infinite; }
+    #sync-status.error   .dot { background: #ff6b6b; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .btn-settings {
+      background: var(--bg3); border: 1px solid var(--border); color: var(--muted);
+      border-radius: 10px; width: 44px; height: 44px; font-size: 1.3rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: color 0.2s, border-color 0.2s; flex-shrink: 0;
+    }
+    .btn-settings:hover { color: var(--text); border-color: var(--accent); }
+
+    /* ── BOTTOM NAV ── */
+    nav {
+      position: fixed; bottom: 0; z-index: 200;
+      background: var(--bg2); border-top: 1px solid var(--border);
+      display: flex;
+      left: 50%; transform: translateX(-50%); width: 100%; max-width: 640px;
+    }
+    .nav-tab {
+      flex: 1; background: none; border: none; color: var(--muted);
+      font-family: var(--font-body); font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.4px; text-transform: uppercase;
+      padding: 11px 4px 9px; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      transition: color 0.2s; border-top: 2px solid transparent;
+    }
+    .nav-tab .nav-icon { font-size: 1.3rem; line-height: 1; }
+    .nav-tab.active { color: var(--accent); border-top-color: var(--accent); }
+
+    /* ── VIEWS ── */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ── SECTIONS ── */
+    section { padding: 16px; }
+    .section-title {
+      font-family: var(--font-display); font-size: 1.1rem;
+      letter-spacing: 1.5px; color: var(--muted); margin-bottom: 12px; text-transform: uppercase;
+    }
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
+    }
+    .section-header .section-title { margin-bottom: 0; }
+
+    .card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px; margin-bottom: 10px;
+    }
+
+    /* ── FORM ── */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    label {
+      display: block; font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 5px;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%; background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text); font-family: var(--font-body);
+      font-size: 1rem; padding: 12px 14px; outline: none; transition: border-color 0.2s;
+    }
+    input:focus { border-color: var(--accent); }
+    input::placeholder { color: var(--muted); }
+
+    /* ── BUTTONS ── */
+    .btn {
+      border: none; border-radius: 10px; font-family: var(--font-body);
+      font-size: 1rem; font-weight: 600; cursor: pointer; padding: 13px 20px;
+      transition: opacity 0.15s, transform 0.1s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn:active { transform: scale(0.97); opacity: 0.85; }
+    .btn-primary { background: var(--accent); color: #111; width: 100%; margin-top: 12px; }
+    .btn-scan    { background: var(--bg3); border: 1px solid var(--border); color: var(--text); width: 100%; margin-top: 10px; }
+    .btn-muted   { background: var(--bg3); border: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; padding: 10px 16px; }
+    .btn-confirm { background: #1a3d1f; border: 1px solid #2e7a3a; color: var(--done-check); }
+
+    /* ── SCAN ── */
+    #scan-preview { display: none; margin-top: 12px; }
+    #scan-preview img { width: 100%; border-radius: 10px; border: 1px solid var(--border); max-height: 220px; object-fit: cover; }
+    #scan-form   { display: none; }
+    #scan-loading { display: none; text-align: center; padding: 20px; color: var(--muted); }
+    .spinner {
+      display: inline-block; width: 30px; height: 30px;
+      border: 3px solid var(--border); border-top-color: var(--accent);
+      border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 10px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #scan-error {
+      display: none; background: #2a1010; border: 1px solid #5a2020;
+      color: #ff8080; border-radius: 10px; padding: 12px 14px; margin-top: 10px; font-size: 0.9rem;
+    }
+
+    /* ── SONG ITEMS ── */
+    #song-list { list-style: none; }
+    .song-item {
+      border-radius: var(--radius); padding: 14px; margin-bottom: 10px;
+      display: grid; grid-template-columns: 26px 1fr auto;
+      gap: 10px; align-items: center;
+      transition: background 0.35s ease, border-color 0.35s ease, opacity 0.35s ease;
+      cursor: grab; user-select: none;
+      border: 1px solid var(--wait-border); background: var(--wait-bg);
+    }
+    .song-item:active { cursor: grabbing; }
+    .song-item.status-done { background: var(--done-bg); border-color: var(--done-border); opacity: 0.75; }
+    .song-item.dragging  { opacity: 0.3; box-shadow: 0 0 0 2px var(--accent); }
+    .song-item.drag-over { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+
+    .drag-handle {
+      color: var(--muted); font-size: 1.1rem; display: flex;
+      align-items: center; justify-content: center; cursor: grab; touch-action: none;
+    }
+    .song-name    { font-weight: 600; font-size: 1rem; margin-bottom: 3px; }
+    .song-details { font-size: 0.88rem; color: var(--muted); margin-bottom: 7px; }
+    .song-meta    { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .tag-table {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 6px; padding: 2px 8px;
+      font-size: 0.78rem; font-weight: 600; color: var(--accent); letter-spacing: 0.5px;
+    }
+    .tag-time { font-size: 0.75rem; color: var(--muted); }
+
+    .status-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 20px; cursor: pointer; user-select: none; border: none;
+      transition: background 0.2s, color 0.2s, transform 0.1s; font-family: var(--font-body);
+    }
+    .status-btn:active { transform: scale(0.94); }
+    .status-btn.wait { background: var(--wait-pill-bg); color: var(--wait-pill-t); }
+    .status-btn.done { background: var(--done-pill-bg); color: var(--done-pill-t); }
+
+    .song-actions { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+    .btn-row { display: flex; gap: 6px; }
+    .btn-icon {
+      background: var(--bg3); border: 1px solid var(--border); color: var(--muted);
+      border-radius: 8px; width: 36px; height: 36px; font-size: 0.95rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: color 0.15s, border-color 0.15s; flex-shrink: 0;
+    }
+    .btn-icon:active { transform: scale(0.9); }
+    .btn-icon.del:hover  { color: #ff6b6b; border-color: #5a2020; }
+    .btn-icon.edit:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── EMPTY STATE ── */
+    .empty-state { text-align: center; padding: 40px 20px; color: var(--muted); }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: 10px; }
+    .empty-state p { font-size: 0.95rem; line-height: 1.6; }
+
+    /* ── GROUPES ── */
+    .group-block {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); margin-bottom: 14px; overflow: hidden;
+    }
+    .group-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; background: var(--bg3); border-bottom: 1px solid var(--border);
+    }
+    .group-title { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 1.5px; color: var(--accent); }
+    .group-pills { display: flex; gap: 6px; align-items: center; }
+    .group-pill { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.3px; border-radius: 20px; padding: 2px 9px; }
+    .group-pill.wait { background: var(--wait-pill-bg); color: var(--wait-pill-t); }
+    .group-pill.done { background: var(--done-pill-bg); color: var(--done-pill-t); }
+    .group-row {
+      padding: 11px 16px; border-bottom: 1px solid var(--border);
+      display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;
+      transition: background 0.3s, opacity 0.3s;
+    }
+    .group-row:last-child { border-bottom: none; }
+    .group-row.status-done { background: #0d1a10; opacity: 0.7; }
+    .group-row-name   { font-weight: 600; font-size: 0.95rem; }
+    .group-row-detail { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+    .row-status-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
+      padding: 3px 9px; border-radius: 20px; border: none; cursor: pointer;
+      font-family: var(--font-body); transition: transform 0.1s; white-space: nowrap; flex-shrink: 0;
+    }
+    .row-status-btn:active { transform: scale(0.92); }
+    .row-status-btn.wait { background: var(--wait-pill-bg); color: var(--wait-pill-t); }
+    .row-status-btn.done { background: var(--done-pill-bg); color: var(--done-pill-t); }
+
+    /* ── MODALS ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+      z-index: 999; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 18px; padding: 28px 24px; width: 100%; max-width: 420px;
+    }
+    .modal h2 { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 6px; }
+    .modal p  { color: var(--muted); font-size: 0.88rem; margin-bottom: 18px; line-height: 1.5; }
+
+    /* Firebase setup modal */
+    .setup-step {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px 12px; background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 10px; margin-bottom: 8px;
+    }
+    .setup-step-num {
+      background: var(--accent); color: #111; font-weight: 700; font-size: 0.8rem;
+      border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0; margin-top: 1px;
+    }
+    .setup-step-text { font-size: 0.85rem; color: var(--text); line-height: 1.5; }
+    .setup-step-text strong { color: var(--accent); }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 82px; left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      background: var(--bg3); border: 1px solid var(--border); color: var(--text);
+      border-radius: 30px; padding: 10px 22px; font-size: 0.9rem; font-weight: 500;
+      z-index: 1000; transition: transform 0.28s ease, opacity 0.28s ease;
+      opacity: 0; white-space: nowrap; pointer-events: none;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* ── OFFLINE BANNER ── */
+    #offline-banner {
+      display: none; background: #2a1500; border-bottom: 1px solid #7a4200;
+      color: #ffaa44; text-align: center; padding: 8px; font-size: 0.82rem; font-weight: 600;
+    }
+
+    @media (max-width: 400px) { .form-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- Offline banner -->
+<div id="offline-banner">⚠️ Hors ligne — les modifications seront synchronisées à la reconnexion</div>
+
+<div id="app">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <h1>🎤 KAROTRUM</h1>
+      <div class="badge-count" id="badge-count" style="display:none">0</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div id="sync-status" class="syncing">
+        <div class="dot"></div>
+        <span id="sync-label">Connexion…</span>
+      </div>
+      <button class="btn-settings" onclick="openSettings()">⚙️</button>
+    </div>
+  </header>
+
+  <!-- ══ VUE AJOUTER ══ -->
+  <div id="view-add" class="view active">
+    <section>
+      <div class="section-title">Saisie manuelle</div>
+      <div class="card">
+        <div class="form-grid">
+          <div><label>Prénom</label><input type="text" id="inp-prenom" placeholder="Marie" autocomplete="off" /></div>
+          <div><label>N° Table</label><input type="text" id="inp-table" placeholder="12" autocomplete="off" /></div>
+          <div><label>Artiste</label><input type="text" id="inp-artiste" placeholder="Céline Dion" autocomplete="off" /></div>
+          <div><label>Titre</label><input type="text" id="inp-titre" placeholder="My Heart Will Go On" autocomplete="off" onkeydown="if(event.key==='Enter')addSongManual()" /></div>
+        </div>
+        <button class="btn btn-primary" onclick="addSongManual()">+ Ajouter la demande</button>
+      </div>
+    </section>
+    <section>
+      <div class="section-title">Scanner un bon ✦</div>
+      <div class="card">
+        <input type="file" id="file-input" accept="image/*" capture="environment" style="display:none" onchange="handleImageSelected(event)" />
+        <button class="btn btn-scan" onclick="document.getElementById('file-input').click()">📷 Scanner un bon papier</button>
+        <div id="scan-preview"><img id="scan-img" src="" alt="Aperçu" /></div>
+        <div id="scan-loading"><div class="spinner"></div><p>Analyse en cours…</p></div>
+        <div id="scan-error"></div>
+        <div id="scan-form">
+          <hr style="margin:14px 0" />
+          <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px">✅ Données extraites — vérifiez et confirmez :</p>
+          <div class="form-grid">
+            <div><label>Prénom</label><input type="text" id="scan-prenom" /></div>
+            <div><label>N° Table</label><input type="text" id="scan-table" /></div>
+            <div><label>Artiste</label><input type="text" id="scan-artiste" /></div>
+            <div><label>Titre</label><input type="text" id="scan-titre" /></div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:12px">
+            <button class="btn btn-confirm" style="flex:1" onclick="confirmScanAdd()">✔ Confirmer l'ajout</button>
+            <button class="btn btn-muted" onclick="cancelScan()">Annuler</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ══ VUE LISTE ══ -->
+  <div id="view-list" class="view">
+    <section>
+      <div class="section-header">
+        <div class="section-title">Liste des titres</div>
+        <button class="btn btn-muted" onclick="cleanDone()" style="padding:7px 12px;font-size:.82rem">🧹 Nettoyer</button>
+      </div>
+      <ul id="song-list"></ul>
+      <div id="empty-list" class="empty-state">
+        <div class="icon">🎵</div><p>Aucune demande pour l'instant.<br>Ajoutez vos premiers chanteurs !</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ══ VUE PAR TABLE ══ -->
+  <div id="view-tables" class="view">
+    <section>
+      <div class="section-title">Par table</div>
+      <div id="table-list"></div>
+      <div id="empty-tables" class="empty-state" style="display:none">
+        <div class="icon">🍽️</div><p>Aucune demande pour l'instant.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ══ VUE PAR PERSONNE ══ -->
+  <div id="view-persons" class="view">
+    <section>
+      <div class="section-title">Par personne</div>
+      <div id="person-list"></div>
+      <div id="empty-persons" class="empty-state" style="display:none">
+        <div class="icon">🎤</div><p>Aucune demande pour l'instant.</p>
+      </div>
+    </section>
+  </div>
+
+</div><!-- #app -->
+
+<!-- BOTTOM NAV -->
+<nav>
+  <button class="nav-tab active" id="tab-add"     onclick="switchTab('add')"><span class="nav-icon">➕</span>Ajouter</button>
+  <button class="nav-tab"        id="tab-list"    onclick="switchTab('list')"><span class="nav-icon">🎵</span>Liste</button>
+  <button class="nav-tab"        id="tab-tables"  onclick="switchTab('tables')"><span class="nav-icon">🍽️</span>Tables</button>
+  <button class="nav-tab"        id="tab-persons" onclick="switchTab('persons')"><span class="nav-icon">🎤</span>Personnes</button>
+</nav>
+
+<div id="toast"></div>
+
+<!-- MODAL ÉDITION -->
+<div id="modal-edit" class="modal-overlay">
+  <div class="modal">
+    <h2>MODIFIER</h2>
+    <p>Corrigez les informations et sauvegardez.</p>
+    <input type="hidden" id="edit-id" />
+    <div class="form-grid" style="margin-bottom:12px">
+      <div><label>Prénom</label><input type="text" id="edit-prenom" /></div>
+      <div><label>N° Table</label><input type="text" id="edit-table" /></div>
+      <div><label>Artiste</label><input type="text" id="edit-artiste" /></div>
+      <div><label>Titre</label><input type="text" id="edit-titre" /></div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-primary" style="margin-top:0;flex:1" onclick="saveEdit()">💾 Sauvegarder</button>
+      <button class="btn btn-muted" onclick="closeEdit()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PARAMÈTRES (Clé API + Firebase) -->
+<div id="modal-api" class="modal-overlay">
+  <div class="modal">
+    <h2>PARAMÈTRES</h2>
+    <p>Clé API Anthropic pour le scan de bons photo.</p>
+    <label>Clé Anthropic (sk-ant-...)</label>
+    <input type="password" id="input-apikey" placeholder="sk-ant-api03-..." style="margin-bottom:16px" />
+
+    <hr style="margin-bottom:16px" />
+
+    <p style="margin-bottom:10px">🔥 Firebase — synchronisation temps réel</p>
+
+    <div class="setup-step">
+      <div class="setup-step-num">1</div>
+      <div class="setup-step-text">Va sur <strong>console.firebase.google.com</strong> → ton projet → <strong>Realtime Database</strong> → copie l'URL (ex: https://karatrum-9130d-default-rtdb.europe-west1.firebasedatabase.app)</div>
+    </div>
+    <div class="setup-step">
+      <div class="setup-step-num">2</div>
+      <div class="setup-step-text">Règles de sécurité → colle : <strong>{ "rules": { ".read": true, ".write": true } }</strong></div>
+    </div>
+
+    <label style="margin-top:12px">URL Realtime Database</label>
+    <input type="text" id="input-dburl" placeholder="https://karatrum-9130d-default-rtdb.europe-west1.firebasedatabase.app" style="margin-bottom:16px" />
+
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-primary" style="margin-top:0;flex:1" onclick="saveSettings()">Enregistrer</button>
+      <button class="btn btn-muted" id="btn-cancel-modal" onclick="closeSettings()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp }          from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+  import { getDatabase, ref, onValue, set, push, remove, update }
+    from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
+
+  /* ================================================================
+     KaroTrum · Firebase Realtime Database · Vanilla JS
+     Sync temps réel entre tous les appareils connectés
+  ================================================================ */
+
+  // ── CONFIG FIREBASE ──────────────────────────────────────────────
+  const FIREBASE_CONFIG = {
+    apiKey:            "AIzaSyBLl4m25UJEDa0sALyImCxKySQ2lgoGUSw",
+    authDomain:        "karatrum-9130d.firebaseapp.com",
+    projectId:         "karatrum-9130d",
+    storageBucket:     "karatrum-9130d.firebasestorage.app",
+    messagingSenderId: "424774753243",
+    appId:             "1:424774753243:web:df17c335179d263190e5fe",
+    // databaseURL sera complété depuis localStorage si renseigné
+  };
+
+  // ── ÉTAT LOCAL ───────────────────────────────────────────────────
+  let songs      = [];   // source de vérité locale (miroir Firebase)
+  let currentTab = 'add';
+  let db         = null;
+  let songsRef   = null;
+  let pendingImageBase64 = null, pendingImageType = 'image/jpeg';
+  let _ignoreNextUpdate = false; // évite les boucles lors d'écritures locales
+
+  // ── FIREBASE INIT ────────────────────────────────────────────────
+  function initFirebase() {
+    const dbUrl = localStorage.getItem('karotrum_dburl') ||
+      'https://karatrum-9130d-default-rtdb.europe-west1.firebasedatabase.app';
+
+    const config = { ...FIREBASE_CONFIG, databaseURL: dbUrl };
+
+    try {
+      const app = initializeApp(config);
+      db       = getDatabase(app);
+      songsRef = ref(db, 'songs');
+      setSyncStatus('syncing', 'Connexion…');
+
+      // Écoute temps réel : toute modification Firebase → mise à jour locale
+      onValue(songsRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data && typeof data === 'object') {
+          // Firebase stocke un objet indexé par clé ; on reconstitue le tableau
+          // en préservant l'ordre via le champ `order`
+          songs = Object.entries(data)
+            .map(([fbKey, song]) => ({ ...song, _fbKey: fbKey }))
+            .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+        } else {
+          songs = [];
+        }
+        setSyncStatus('synced', 'Synchronisé');
+        render();
+      }, (error) => {
+        setSyncStatus('error', 'Erreur sync');
+        console.error('Firebase error:', error);
+        showToast('⚠️ Erreur de synchronisation Firebase');
+      });
+
+    } catch (e) {
+      setSyncStatus('error', 'Non connecté');
+      console.error('Firebase init error:', e);
+    }
+  }
+
+  // ── SYNC STATUS UI ───────────────────────────────────────────────
+  function setSyncStatus(state, label) {
+    const el = document.getElementById('sync-status');
+    el.className = state;
+    document.getElementById('sync-label').textContent = label;
+  }
+
+  // ── ÉCRITURE FIREBASE ────────────────────────────────────────────
+  // Réécrit toute la liste avec les indices d'ordre
+  async function persistToFirebase() {
+    if (!db || !songsRef) return;
+    setSyncStatus('syncing', 'Enregistrement…');
+    try {
+      // On réécrit le nœud entier avec un objet keyed par song.id
+      const obj = {};
+      songs.forEach((s, i) => {
+        const { _fbKey, ...clean } = s; // on enlève _fbKey du payload
+        obj[s.id] = { ...clean, order: i };
+      });
+      await set(songsRef, obj);
+      setSyncStatus('synced', 'Synchronisé');
+    } catch (e) {
+      setSyncStatus('error', 'Erreur sync');
+      showToast('⚠️ Impossible de sauvegarder');
+      console.error(e);
+    }
+  }
+
+  // ── NAVIGATION ───────────────────────────────────────────────────
+  window.switchTab = function(tab) {
+    currentTab = tab;
+    ['add','list','tables','persons'].forEach(t => {
+      document.getElementById('view-' + t).classList.toggle('active', t === tab);
+      document.getElementById('tab-'  + t).classList.toggle('active', t === tab);
+    });
+    if (tab === 'list')    renderList();
+    if (tab === 'tables')  renderTables();
+    if (tab === 'persons') renderPersons();
+  };
+
+  // ── RENDER HUB ───────────────────────────────────────────────────
+  function render() {
+    updateBadge();
+    if (currentTab === 'list')    renderList();
+    if (currentTab === 'tables')  renderTables();
+    if (currentTab === 'persons') renderPersons();
+  }
+
+  function updateBadge() {
+    const n  = songs.filter(s => s.status === 'wait').length;
+    const el = document.getElementById('badge-count');
+    el.textContent = n; el.style.display = n > 0 ? '' : 'none';
+  }
+
+  function esc(v) {
+    if (!v) return '—';
+    return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── STATUS HELPERS ───────────────────────────────────────────────
+  function statusBtnHTML(id, status) {
+    return status === 'wait'
+      ? `<button class="status-btn wait" onclick="toggleStatus('${id}')">⏳ En attente</button>`
+      : `<button class="status-btn done" onclick="toggleStatus('${id}')">✔ Chantée</button>`;
+  }
+  function rowStatusBtnHTML(id, status) {
+    return status === 'wait'
+      ? `<button class="row-status-btn wait" onclick="toggleStatus('${id}')">⏳ En attente</button>`
+      : `<button class="row-status-btn done" onclick="toggleStatus('${id}')">✔ Chantée</button>`;
+  }
+
+  window.toggleStatus = function(id) {
+    const s = songs.find(x => x.id === id); if (!s) return;
+    s.status = s.status === 'wait' ? 'done' : 'wait';
+    persistToFirebase();
+    render(); // mise à jour UI immédiate
+  };
+
+  // ── VUE LISTE ────────────────────────────────────────────────────
+  function renderList() {
+    const ul    = document.getElementById('song-list');
+    const empty = document.getElementById('empty-list');
+    if (!songs.length) { ul.innerHTML = ''; empty.style.display = ''; return; }
+    empty.style.display = 'none';
+    ul.innerHTML = songs.map((s, i) => `
+      <li class="song-item status-${s.status}" draggable="true" data-id="${s.id}" data-index="${i}">
+        <div class="drag-handle" title="Glisser pour réordonner">⠿</div>
+        <div class="song-info">
+          <div class="song-name">${esc(s.prenom)}</div>
+          <div class="song-details">🎵 ${esc(s.titre)} — ${esc(s.artiste)}</div>
+          <div class="song-meta">
+            <span class="tag-table">Table ${esc(s.table)}</span>
+            <span class="tag-time">${s.time}</span>
+            ${statusBtnHTML(s.id, s.status)}
+          </div>
+        </div>
+        <div class="song-actions">
+          <div class="btn-row">
+            <button class="btn-icon edit" onclick="openEdit('${s.id}')" title="Modifier">✏️</button>
+            <button class="btn-icon del"  onclick="deleteSong('${s.id}')" title="Supprimer">✕</button>
+          </div>
+        </div>
+      </li>`).join('');
+    initDnD();
+  }
+
+  // ── VUE PAR TABLE ────────────────────────────────────────────────
+  function renderTables() {
+    const container = document.getElementById('table-list');
+    const empty     = document.getElementById('empty-tables');
+    if (!songs.length) { container.innerHTML = ''; empty.style.display = ''; return; }
+    empty.style.display = 'none';
+    const groups = groupBy(songs, s => s.table || '—');
+    const keys   = Object.keys(groups).sort((a,b) => {
+      if (a==='—') return 1; if (b==='—') return -1;
+      return Number(a)-Number(b) || a.localeCompare(b);
+    });
+    container.innerHTML = keys.map(key => buildGroupHTML(
+      `TABLE ${esc(key)}`, groups[key],
+      s => `🎵 ${esc(s.titre)} — ${esc(s.artiste)}`,
+      s => esc(s.prenom)
+    )).join('');
+  }
+
+  // ── VUE PAR PERSONNE ─────────────────────────────────────────────
+  function renderPersons() {
+    const container = document.getElementById('person-list');
+    const empty     = document.getElementById('empty-persons');
+    if (!songs.length) { container.innerHTML = ''; empty.style.display = ''; return; }
+    empty.style.display = 'none';
+    const groups = groupBy(songs, s => (s.prenom||'—').trim());
+    const keys   = Object.keys(groups).sort((a,b) => {
+      if (a==='—') return 1; if (b==='—') return -1;
+      return a.localeCompare(b, 'fr', { sensitivity:'base' });
+    });
+    container.innerHTML = keys.map(key => buildGroupHTML(
+      esc(key).toUpperCase(), groups[key],
+      s => `🎵 ${esc(s.titre)} — ${esc(s.artiste)}`,
+      s => `Table ${esc(s.table)}`
+    )).join('');
+  }
+
+  // ── GROUP HELPERS ────────────────────────────────────────────────
+  function groupBy(arr, keyFn) {
+    return arr.reduce((acc, item) => {
+      const k = keyFn(item); (acc[k] = acc[k]||[]).push(item); return acc;
+    }, {});
+  }
+
+  function buildGroupHTML(title, items, detailFn, subFn) {
+    const waitCount = items.filter(s => s.status==='wait').length;
+    const doneCount = items.length - waitCount;
+    const pillsHTML = [
+      waitCount ? `<span class="group-pill wait">⏳ ${waitCount}</span>` : '',
+      doneCount ? `<span class="group-pill done">✔ ${doneCount}</span>`  : ''
+    ].join('');
+    const rowsHTML = items.map(s => `
+      <div class="group-row status-${s.status}">
+        <div>
+          <div class="group-row-name">${detailFn(s)}</div>
+          <div class="group-row-detail">${subFn(s)} · ${s.time}</div>
+        </div>
+        ${rowStatusBtnHTML(s.id, s.status)}
+      </div>`).join('');
+    return `
+      <div class="group-block">
+        <div class="group-header">
+          <span class="group-title">${title}</span>
+          <div class="group-pills">${pillsHTML}</div>
+        </div>
+        ${rowsHTML}
+      </div>`;
+  }
+
+  // ── DRAG & DROP ──────────────────────────────────────────────────
+  let dragSrcIndex = null;
+
+  function initDnD() {
+    document.querySelectorAll('#song-list .song-item').forEach(el => {
+      el.addEventListener('dragstart', onDragStart);
+      el.addEventListener('dragover',  onDragOver);
+      el.addEventListener('dragleave', onDragLeave);
+      el.addEventListener('drop',      onDrop);
+      el.addEventListener('dragend',   onDragEnd);
+      el.addEventListener('touchstart', onTouchStart, { passive: true });
+      el.addEventListener('touchmove',  onTouchMove,  { passive: false });
+      el.addEventListener('touchend',   onTouchEnd);
+    });
+  }
+  function onDragStart(e) { dragSrcIndex = +e.currentTarget.dataset.index; e.currentTarget.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; }
+  function onDragOver(e)  { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+  function onDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+  function onDrop(e) {
+    e.preventDefault(); const ti = +e.currentTarget.dataset.index; e.currentTarget.classList.remove('drag-over');
+    if (dragSrcIndex===null||dragSrcIndex===ti) return;
+    songs.splice(ti, 0, songs.splice(dragSrcIndex,1)[0]);
+    persistToFirebase(); renderList(); updateBadge();
+  }
+  function onDragEnd(e) { e.currentTarget.classList.remove('dragging'); document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over')); dragSrcIndex=null; }
+
+  let tEl=null, tIdx=null, tClone=null, tOffY=0;
+  function onTouchStart(e) {
+    if (!e.target.closest('.drag-handle')) return;
+    tEl=e.currentTarget; tIdx=+tEl.dataset.index;
+    const r=tEl.getBoundingClientRect(); tOffY=e.touches[0].clientY-r.top;
+    tClone=tEl.cloneNode(true);
+    Object.assign(tClone.style,{ position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',opacity:'0.7',zIndex:'9999',pointerEvents:'none',border:'2px solid var(--accent)',borderRadius:'var(--radius)',background:'var(--bg3)' });
+    document.body.appendChild(tClone); tEl.classList.add('dragging');
+  }
+  function onTouchMove(e) {
+    if (!tClone) return; e.preventDefault();
+    tClone.style.top=(e.touches[0].clientY-tOffY)+'px';
+    document.querySelectorAll('.song-item').forEach(el=>el.classList.remove('drag-over'));
+    const over=document.elementsFromPoint(e.touches[0].clientX,e.touches[0].clientY).find(el=>el.classList.contains('song-item')&&el!==tEl);
+    if (over) over.classList.add('drag-over');
+  }
+  function onTouchEnd() {
+    if (!tClone) return;
+    tClone.remove(); tClone=null; tEl.classList.remove('dragging');
+    const over=document.querySelector('.song-item.drag-over');
+    if (over) { over.classList.remove('drag-over'); const ti=+over.dataset.index; if(tIdx!==null&&tIdx!==ti){ songs.splice(ti,0,songs.splice(tIdx,1)[0]); persistToFirebase(); renderList(); updateBadge(); } }
+    tEl=null; tIdx=null;
+  }
+
+  // ── AJOUT ────────────────────────────────────────────────────────
+  window.addSongManual = function() {
+    const prenom=v('inp-prenom'),artiste=v('inp-artiste'),titre=v('inp-titre'),table=v('inp-table');
+    if (!prenom&&!titre){ showToast('⚠️ Remplis au moins le prénom ou le titre'); return; }
+    addSong({prenom,artiste,titre,table});
+    ['inp-prenom','inp-artiste','inp-titre','inp-table'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('inp-prenom').focus();
+    showToast('✅ Demande ajoutée !');
+  };
+
+  function addSong({prenom,artiste,titre,table}) {
+    const song = {
+      id: Date.now().toString(36)+Math.random().toString(36).slice(2,5),
+      prenom:prenom||'', artiste:artiste||'', titre:titre||'', table:table||'',
+      status:'wait', time: new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),
+      order: songs.length
+    };
+    songs.push(song);
+    persistToFirebase();
+    render();
+  }
+
+  // ── ÉDITION ──────────────────────────────────────────────────────
+  window.openEdit = function(id) {
+    const s=songs.find(x=>x.id===id); if(!s) return;
+    document.getElementById('edit-id').value=id;
+    document.getElementById('edit-prenom').value=s.prenom;
+    document.getElementById('edit-artiste').value=s.artiste;
+    document.getElementById('edit-titre').value=s.titre;
+    document.getElementById('edit-table').value=s.table;
+    document.getElementById('modal-edit').classList.add('active');
+  };
+  window.closeEdit = function() { document.getElementById('modal-edit').classList.remove('active'); };
+  window.saveEdit  = function() {
+    const id=document.getElementById('edit-id').value;
+    const s=songs.find(x=>x.id===id); if(!s) return;
+    s.prenom=v('edit-prenom'); s.artiste=v('edit-artiste');
+    s.titre=v('edit-titre');   s.table=v('edit-table');
+    persistToFirebase(); render(); closeEdit();
+    showToast('✏️ Demande modifiée');
+  };
+
+  // ── SUPPRESSION ──────────────────────────────────────────────────
+  window.deleteSong = function(id) {
+    songs = songs.filter(x=>x.id!==id);
+    persistToFirebase(); render(); showToast('🗑️ Demande supprimée');
+  };
+
+  // ── NETTOYAGE ─────────────────────────────────────────────────────
+  window.cleanDone = function() {
+    const n=songs.filter(s=>s.status==='done').length;
+    songs=songs.filter(s=>s.status!=='done');
+    persistToFirebase(); render();
+    showToast(n>0?`🧹 ${n} demande(s) supprimée(s)`:'Aucune chantée à supprimer');
+  };
+
+  // ── SCAN IA ───────────────────────────────────────────────────────
+  window.handleImageSelected = function(event) {
+    const file=event.target.files[0]; if(!file) return;
+    ['scan-error','scan-form','scan-loading'].forEach(id=>document.getElementById(id).style.display='none');
+    const reader=new FileReader();
+    reader.onload=e=>{
+      const[,b64]=e.target.result.split(',');
+      document.getElementById('scan-img').src=e.target.result;
+      document.getElementById('scan-preview').style.display='block';
+      pendingImageBase64=b64; pendingImageType=file.type||'image/jpeg';
+      analyzeImageWithAI(b64,pendingImageType);
+    };
+    reader.readAsDataURL(file); event.target.value='';
+  };
+
+  async function analyzeImageWithAI(b64,mime) {
+    const key=localStorage.getItem('anthropic_api_key');
+    if(!key){ showScanError('🔑 Clé API manquante. Appuyez sur ⚙️.'); return; }
+    document.getElementById('scan-loading').style.display='block';
+    document.getElementById('scan-form').style.display='none';
+    document.getElementById('scan-error').style.display='none';
+    try {
+      const resp=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'x-api-key':key,'anthropic-version':'2023-06-01','content-type':'application/json','anthropic-dangerous-direct-browser-access':'true'},
+        body:JSON.stringify({
+          model:'claude-sonnet-4-20250514',max_tokens:300,
+          messages:[{role:'user',content:[
+            {type:'image',source:{type:'base64',media_type:mime,data:b64}},
+            {type:'text',text:'Tu es un assistant de lecture de bons karaoké. Analyse cette photo d\'un bon papier rempli à la main. Extrait les informations suivantes si présentes : prénom, artiste, titre de la chanson, numéro de table. Réponds UNIQUEMENT en JSON valide, sans texte autour, avec exactement ces clés : { "prenom": "", "artiste": "", "titre": "", "table": "" }. Si une information est illisible ou absente, laisse la valeur vide.'}
+          ]}]
+        })
+      });
+      document.getElementById('scan-loading').style.display='none';
+      if(!resp.ok){const e=await resp.json().catch(()=>({}));showScanError(`❌ Erreur API : ${e?.error?.message||resp.status}`);return;}
+      const data=await resp.json();
+      const raw=(data.content?.[0]?.text||'').replace(/```json|```/gi,'').trim();
+      let ex; try{ex=JSON.parse(raw);}catch{showScanError('⚠️ Réponse IA illisible. Essayez une photo plus nette.');return;}
+      document.getElementById('scan-prenom').value=ex.prenom||'';
+      document.getElementById('scan-artiste').value=ex.artiste||'';
+      document.getElementById('scan-titre').value=ex.titre||'';
+      document.getElementById('scan-table').value=ex.table||'';
+      document.getElementById('scan-form').style.display='block';
+    } catch(e){
+      document.getElementById('scan-loading').style.display='none';
+      showScanError(`🌐 Connexion impossible. ${e.message}`);
+    }
+  }
+
+  function showScanError(msg){const el=document.getElementById('scan-error');el.textContent=msg;el.style.display='block';}
+
+  window.confirmScanAdd=function(){
+    const prenom=v('scan-prenom'),artiste=v('scan-artiste'),titre=v('scan-titre'),table=v('scan-table');
+    if(!prenom&&!titre){showToast('⚠️ Remplis au moins le prénom ou le titre');return;}
+    addSong({prenom,artiste,titre,table}); cancelScan(); showToast('✅ Bon ajouté depuis la photo !');
+  };
+  window.cancelScan=function(){
+    ['scan-preview','scan-form','scan-error','scan-loading'].forEach(id=>document.getElementById(id).style.display='none');
+    pendingImageBase64=null;
+  };
+
+  // ── PARAMÈTRES ───────────────────────────────────────────────────
+  window.openSettings=function(){
+    document.getElementById('input-apikey').value=localStorage.getItem('anthropic_api_key')||'';
+    document.getElementById('input-dburl').value=localStorage.getItem('karotrum_dburl')||'';
+    const hasKey=!!localStorage.getItem('anthropic_api_key');
+    document.getElementById('btn-cancel-modal').style.display=hasKey?'':'none';
+    document.getElementById('modal-api').classList.add('active');
+  };
+  window.closeSettings=function(){document.getElementById('modal-api').classList.remove('active');};
+  window.saveSettings=function(){
+    const apiKey=v('input-apikey');
+    const dbUrl=v('input-dburl');
+    if(apiKey) localStorage.setItem('anthropic_api_key',apiKey);
+    if(dbUrl)  localStorage.setItem('karotrum_dburl',dbUrl);
+    closeSettings();
+    showToast('✅ Paramètres enregistrés — rechargement…');
+    setTimeout(()=>location.reload(),1200);
+  };
+
+  // ── TOAST ─────────────────────────────────────────────────────────
+  let _tt=null;
+  window.showToast=function(msg){
+    const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
+    if(_tt)clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2600);
+  };
+
+  // ── UTILS ──────────────────────────────────────────────────────────
+  function v(id){return(document.getElementById(id).value||'').trim();}
+
+  // ── OFFLINE DETECTION ─────────────────────────────────────────────
+  window.addEventListener('offline',()=>{
+    document.getElementById('offline-banner').style.display='block';
+    setSyncStatus('error','Hors ligne');
+  });
+  window.addEventListener('online',()=>{
+    document.getElementById('offline-banner').style.display='none';
+    setSyncStatus('synced','Reconnecté');
+  });
+
+  // ── INIT ──────────────────────────────────────────────────────────
+  initFirebase();
+
+  // Premier lancement : ouvrir paramètres si pas de clé API
+  if(!localStorage.getItem('anthropic_api_key')){
+    document.getElementById('btn-cancel-modal').style.display='none';
+    document.getElementById('modal-api').classList.add('active');
+  }
+</script>
+</body>
+</html>
