@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>🎤 KaroTrum</title>
+  <title>🎤 Karatrum</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -32,70 +31,26 @@
       --font-body:   'DM Sans', sans-serif;
     }
 
-    html, body {
-      height: 100%; background: var(--bg); color: var(--text);
-      font-family: var(--font-body); font-size: 16px;
-      -webkit-tap-highlight-color: transparent;
-    }
+    html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; -webkit-tap-highlight-color: transparent; }
     #app { max-width: 640px; margin: 0 auto; padding: 0 0 100px; min-height: 100%; }
 
     /* ── HEADER ── */
-    header {
-      position: sticky; top: 0; z-index: 100;
-      background: var(--bg); border-bottom: 1px solid var(--border);
-      padding: 12px 16px;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    }
+    header { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .header-left { display: flex; align-items: center; gap: 10px; }
-    header h1 {
-      font-family: var(--font-display); font-size: 2rem;
-      letter-spacing: 2px; color: var(--accent); line-height: 1;
-    }
-    .badge-count {
-      background: var(--accent2); color: #fff; font-weight: 600; font-size: 0.85rem;
-      border-radius: 20px; padding: 3px 10px; min-width: 36px; text-align: center;
-    }
-
-    /* Sync indicator */
-    #sync-status {
-      display: flex; align-items: center; gap: 6px;
-      font-size: 0.75rem; font-weight: 600; color: var(--muted);
-      padding: 4px 10px; border-radius: 20px;
-      background: var(--bg3); border: 1px solid var(--border);
-      transition: all 0.3s;
-    }
-    #sync-status .dot {
-      width: 7px; height: 7px; border-radius: 50%; background: var(--muted);
-      transition: background 0.3s;
-    }
+    header h1 { font-family: var(--font-display); font-size: 2rem; letter-spacing: 2px; color: var(--accent); line-height: 1; }
+    .badge-count { background: var(--accent2); color: #fff; font-weight: 600; font-size: 0.85rem; border-radius: 20px; padding: 3px 10px; min-width: 36px; text-align: center; }
+    #sync-status { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600; color: var(--muted); padding: 4px 10px; border-radius: 20px; background: var(--bg3); border: 1px solid var(--border); transition: all 0.3s; }
+    #sync-status .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); transition: background 0.3s; }
     #sync-status.synced  .dot { background: var(--done-check); }
     #sync-status.syncing .dot { background: var(--accent); animation: pulse 1s infinite; }
     #sync-status.error   .dot { background: #ff6b6b; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-    .btn-settings {
-      background: var(--bg3); border: 1px solid var(--border); color: var(--muted);
-      border-radius: 10px; width: 44px; height: 44px; font-size: 1.3rem;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: color 0.2s, border-color 0.2s; flex-shrink: 0;
-    }
+    .btn-settings { background: var(--bg3); border: 1px solid var(--border); color: var(--muted); border-radius: 10px; width: 44px; height: 44px; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s, border-color 0.2s; flex-shrink: 0; }
     .btn-settings:hover { color: var(--text); border-color: var(--accent); }
 
-    /* ── BOTTOM NAV ── */
-    nav {
-      position: fixed; bottom: 0; z-index: 200;
-      background: var(--bg2); border-top: 1px solid var(--border);
-      display: flex;
-      left: 50%; transform: translateX(-50%); width: 100%; max-width: 640px;
-    }
-    .nav-tab {
-      flex: 1; background: none; border: none; color: var(--muted);
-      font-family: var(--font-body); font-size: 0.7rem; font-weight: 600;
-      letter-spacing: 0.4px; text-transform: uppercase;
-      padding: 11px 4px 9px; cursor: pointer;
-      display: flex; flex-direction: column; align-items: center; gap: 3px;
-      transition: color 0.2s; border-top: 2px solid transparent;
-    }
+    /* ── NAV ── */
+    nav { position: fixed; bottom: 0; z-index: 200; background: var(--bg2); border-top: 1px solid var(--border); display: flex; left: 50%; transform: translateX(-50%); width: 100%; max-width: 640px; }
+    .nav-tab { flex: 1; background: none; border: none; color: var(--muted); font-family: var(--font-body); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; padding: 11px 4px 9px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: color 0.2s; border-top: 2px solid transparent; }
     .nav-tab .nav-icon { font-size: 1.3rem; line-height: 1; }
     .nav-tab.active { color: var(--accent); border-top-color: var(--accent); }
 
@@ -103,43 +58,35 @@
     .view { display: none; }
     .view.active { display: block; }
 
-    /* ── SECTIONS ── */
+    /* ── GENERIC ── */
     section { padding: 16px; }
-    .section-title {
-      font-family: var(--font-display); font-size: 1.1rem;
-      letter-spacing: 1.5px; color: var(--muted); margin-bottom: 12px; text-transform: uppercase;
-    }
-    .section-header {
-      display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
-    }
+    .section-title { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .section-header .section-title { margin-bottom: 0; }
-
-    .card {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 16px; margin-bottom: 10px;
-    }
-
-    /* ── FORM ── */
+    .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 10px; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    label {
-      display: block; font-size: 0.75rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 5px;
-    }
-    input[type="text"], input[type="password"] {
-      width: 100%; background: var(--bg3); border: 1px solid var(--border);
-      border-radius: 10px; color: var(--text); font-family: var(--font-body);
-      font-size: 1rem; padding: 12px 14px; outline: none; transition: border-color 0.2s;
-    }
+    label { display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 5px; }
+    input[type="text"], input[type="password"] { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font-body); font-size: 1rem; padding: 12px 14px; outline: none; transition: border-color 0.2s; }
     input:focus { border-color: var(--accent); }
     input::placeholder { color: var(--muted); }
 
-    /* ── BUTTONS ── */
-    .btn {
-      border: none; border-radius: 10px; font-family: var(--font-body);
-      font-size: 1rem; font-weight: 600; cursor: pointer; padding: 13px 20px;
-      transition: opacity 0.15s, transform 0.1s;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
+    /* ── AUTOCOMPLETE DROPDOWN ── */
+    .autocomplete-wrap { position: relative; }
+    .autocomplete-list {
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: var(--bg2); border: 1px solid var(--accent);
+      border-radius: 10px; z-index: 300; overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
     }
+    .autocomplete-item {
+      padding: 11px 14px; cursor: pointer; font-size: 0.95rem;
+      transition: background 0.12s;
+      border-bottom: 1px solid var(--border);
+    }
+    .autocomplete-item:last-child { border-bottom: none; }
+    .autocomplete-item:hover, .autocomplete-item.focused { background: var(--bg3); color: var(--accent); }
+    .autocomplete-item mark { background: none; color: var(--accent); font-weight: 700; }
+    .btn { border: none; border-radius: 10px; font-family: var(--font-body); font-size: 1rem; font-weight: 600; cursor: pointer; padding: 13px 20px; transition: opacity 0.15s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .btn:active { transform: scale(0.97); opacity: 0.85; }
     .btn-primary { background: var(--accent); color: #111; width: 100%; margin-top: 12px; }
     .btn-scan    { background: var(--bg3); border: 1px solid var(--border); color: var(--text); width: 100%; margin-top: 10px; }
@@ -147,162 +94,487 @@
     .btn-confirm { background: #1a3d1f; border: 1px solid #2e7a3a; color: var(--done-check); }
 
     /* ── SCAN ── */
-    #scan-preview { display: none; margin-top: 12px; }
-    #scan-preview img { width: 100%; border-radius: 10px; border: 1px solid var(--border); max-height: 220px; object-fit: cover; }
-    #scan-form   { display: none; }
     #scan-loading { display: none; text-align: center; padding: 20px; color: var(--muted); }
-    .spinner {
-      display: inline-block; width: 30px; height: 30px;
-      border: 3px solid var(--border); border-top-color: var(--accent);
-      border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 10px;
-    }
+    .spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 10px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    #scan-error {
-      display: none; background: #2a1010; border: 1px solid #5a2020;
-      color: #ff8080; border-radius: 10px; padding: 12px 14px; margin-top: 10px; font-size: 0.9rem;
+    #scan-error { display: none; background: #2a1010; border: 1px solid #5a2020; color: #ff8080; border-radius: 10px; padding: 12px 14px; margin-top: 10px; font-size: 0.9rem; }
+
+    /* ── MODALE SCAN MULTI-BLOCS ── */
+    #modal-scan {
+      display: none; position: fixed; inset: 0;
+      background: var(--bg); z-index: 1100;
+      flex-direction: column;
     }
+    #modal-scan.active { display: flex; }
+
+    .scan-modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px; background: var(--bg2);
+      border-bottom: 1px solid var(--border); flex-shrink: 0;
+    }
+    .scan-modal-header h2 {
+      font-family: var(--font-display); font-size: 1.5rem;
+      letter-spacing: 1.5px; color: var(--accent);
+    }
+    .scan-modal-header-right { display: flex; align-items: center; gap: 8px; }
+    .scan-photo-thumb {
+      width: 48px; height: 48px; border-radius: 8px;
+      object-fit: cover; border: 1px solid var(--border);
+      cursor: pointer; flex-shrink: 0;
+    }
+
+    .scan-modal-body {
+      flex: 1; overflow-y: auto; padding: 14px 14px 0;
+    }
+
+    /* Bloc d'une musique détectée */
+    .scan-block {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); margin-bottom: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s, opacity 0.2s;
+    }
+    .scan-block.validated { border-color: var(--done-border); background: var(--done-bg); }
+    .scan-block.dismissed { opacity: 0.35; }
+
+    .scan-block-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px 0;
+    }
+    .scan-block-num {
+      font-family: var(--font-display); font-size: 1rem;
+      letter-spacing: 1px; color: var(--muted); text-transform: uppercase;
+    }
+    .scan-block-actions { display: flex; gap: 6px; }
+
+    .scan-block-body { padding: 10px 14px 14px; }
+
+    /* Boutons valider / supprimer dans un bloc */
+    .scan-validate-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 14px; border-radius: 8px; border: none; cursor: pointer;
+      font-family: var(--font-body); font-size: 0.82rem; font-weight: 700;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .scan-validate-btn:active { transform: scale(0.95); }
+    .scan-validate-btn.confirm { background: #1a3d1f; color: var(--done-check); border: 1px solid #2e7a3a; }
+    .scan-validate-btn.confirm.done { background: var(--done-pill-bg); }
+    .scan-validate-btn.remove  { background: #2a1010; color: #ff8080; border: 1px solid #5a2020; }
+
+    .scan-modal-footer {
+      flex-shrink: 0; padding: 12px 14px;
+      background: var(--bg2); border-top: 1px solid var(--border);
+      display: flex; gap: 10px;
+    }
+
+    /* Bouton "Ajouter un bloc manuellement" */
+    .scan-add-block-btn {
+      background: var(--bg3); border: 1px dashed var(--border);
+      border-radius: var(--radius); padding: 12px;
+      color: var(--muted); font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; text-align: center; margin-bottom: 12px;
+      transition: border-color 0.15s, color 0.15s;
+      width: 100%;
+    }
+    .scan-add-block-btn:hover { border-color: var(--accent); color: var(--accent); }
 
     /* ── SONG ITEMS ── */
     #song-list { list-style: none; }
-    .song-item {
-      border-radius: var(--radius); padding: 14px; margin-bottom: 10px;
-      display: grid; grid-template-columns: 26px 1fr auto;
-      gap: 10px; align-items: center;
-      transition: background 0.35s ease, border-color 0.35s ease, opacity 0.35s ease;
-      cursor: grab; user-select: none;
-      border: 1px solid var(--wait-border); background: var(--wait-bg);
-    }
+    .song-item { border-radius: var(--radius); padding: 14px; margin-bottom: 10px; display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; transition: background 0.35s ease, border-color 0.35s ease, opacity 0.35s ease; cursor: grab; user-select: none; border: 1px solid var(--wait-border); background: var(--wait-bg); }
     .song-item:active { cursor: grabbing; }
     .song-item.status-done { background: var(--done-bg); border-color: var(--done-border); opacity: 0.75; }
     .song-item.dragging  { opacity: 0.3; box-shadow: 0 0 0 2px var(--accent); }
     .song-item.drag-over { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
-
-    .drag-handle {
-      color: var(--muted); font-size: 1.1rem; display: flex;
-      align-items: center; justify-content: center; cursor: grab; touch-action: none;
-    }
+    .drag-handle { color: var(--muted); font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: grab; touch-action: none; }
     .song-name    { font-weight: 600; font-size: 1rem; margin-bottom: 3px; }
     .song-details { font-size: 0.88rem; color: var(--muted); margin-bottom: 7px; }
     .song-meta    { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-    .tag-table {
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: 6px; padding: 2px 8px;
-      font-size: 0.78rem; font-weight: 600; color: var(--accent); letter-spacing: 0.5px;
-    }
+    .tag-table { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 2px 8px; font-size: 0.78rem; font-weight: 600; color: var(--accent); letter-spacing: 0.5px; }
     .tag-time { font-size: 0.75rem; color: var(--muted); }
-
-    .status-btn {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase;
-      padding: 4px 10px; border-radius: 20px; cursor: pointer; user-select: none; border: none;
-      transition: background 0.2s, color 0.2s, transform 0.1s; font-family: var(--font-body);
-    }
+    .status-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.4px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; cursor: pointer; user-select: none; border: none; transition: background 0.2s, color 0.2s, transform 0.1s; font-family: var(--font-body); }
     .status-btn:active { transform: scale(0.94); }
     .status-btn.wait { background: var(--wait-pill-bg); color: var(--wait-pill-t); }
     .status-btn.done { background: var(--done-pill-bg); color: var(--done-pill-t); }
-
     .song-actions { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
     .btn-row { display: flex; gap: 6px; }
-    .btn-icon {
-      background: var(--bg3); border: 1px solid var(--border); color: var(--muted);
-      border-radius: 8px; width: 36px; height: 36px; font-size: 0.95rem;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: color 0.15s, border-color 0.15s; flex-shrink: 0;
-    }
+    .btn-icon { background: var(--bg3); border: 1px solid var(--border); color: var(--muted); border-radius: 8px; width: 36px; height: 36px; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.15s, border-color 0.15s; flex-shrink: 0; }
     .btn-icon:active { transform: scale(0.9); }
     .btn-icon.del:hover  { color: #ff6b6b; border-color: #5a2020; }
     .btn-icon.edit:hover { color: var(--accent); border-color: var(--accent); }
 
-    /* ── EMPTY STATE ── */
+    /* ── EMPTY ── */
     .empty-state { text-align: center; padding: 40px 20px; color: var(--muted); }
     .empty-state .icon { font-size: 2.5rem; margin-bottom: 10px; }
     .empty-state p { font-size: 0.95rem; line-height: 1.6; }
 
-    /* ── GROUPES ── */
-    .group-block {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: var(--radius); margin-bottom: 14px; overflow: hidden;
-    }
-    .group-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 16px; background: var(--bg3); border-bottom: 1px solid var(--border);
-    }
+    /* ── GROUPES (personnes) ── */
+    .group-block { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 14px; overflow: hidden; }
+    .group-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--bg3); border-bottom: 1px solid var(--border); }
     .group-title { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 1.5px; color: var(--accent); }
     .group-pills { display: flex; gap: 6px; align-items: center; }
     .group-pill { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.3px; border-radius: 20px; padding: 2px 9px; }
     .group-pill.wait { background: var(--wait-pill-bg); color: var(--wait-pill-t); }
     .group-pill.done { background: var(--done-pill-bg); color: var(--done-pill-t); }
-    .group-row {
-      padding: 11px 16px; border-bottom: 1px solid var(--border);
-      display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;
-      transition: background 0.3s, opacity 0.3s;
-    }
+    .group-row { padding: 11px 16px; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; transition: background 0.3s, opacity 0.3s; }
     .group-row:last-child { border-bottom: none; }
     .group-row.status-done { background: #0d1a10; opacity: 0.7; }
     .group-row-name   { font-weight: 600; font-size: 0.95rem; }
     .group-row-detail { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
-    .row-status-btn {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
-      padding: 3px 9px; border-radius: 20px; border: none; cursor: pointer;
-      font-family: var(--font-body); transition: transform 0.1s; white-space: nowrap; flex-shrink: 0;
-    }
+    .row-status-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; padding: 3px 9px; border-radius: 20px; border: none; cursor: pointer; font-family: var(--font-body); transition: transform 0.1s; white-space: nowrap; flex-shrink: 0; }
     .row-status-btn:active { transform: scale(0.92); }
     .row-status-btn.wait { background: var(--wait-pill-bg); color: var(--wait-pill-t); }
     .row-status-btn.done { background: var(--done-pill-bg); color: var(--done-pill-t); }
 
-    /* ── MODALS ── */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-      z-index: 999; align-items: center; justify-content: center; padding: 20px;
+    /* ── COMPTEURS PERSONNE ── */
+    .person-counters {
+      display: flex; gap: 8px; margin-top: 5px; flex-wrap: wrap;
     }
-    .modal-overlay.active { display: flex; }
-    .modal {
+    .person-counter {
+      display: flex; align-items: center; gap: 4px;
+      border-radius: 8px; padding: 3px 9px 3px 6px;
+      font-family: var(--font-body);
+    }
+    .person-counter.wait { background: var(--wait-pill-bg); }
+    .person-counter.done { background: var(--done-pill-bg); }
+    .pctr-icon { font-size: 0.9rem; line-height: 1; }
+    .pctr-num  {
+      font-size: 1.15rem; font-weight: 700; line-height: 1;
+      font-family: var(--font-display); letter-spacing: 0.5px;
+    }
+    .person-counter.wait .pctr-num { color: var(--wait-pill-t); }
+    .person-counter.done .pctr-num { color: var(--done-pill-t); }
+    .pctr-label {
+      font-size: 0.68rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.4px; opacity: 0.8;
+    }
+    .person-counter.wait .pctr-label { color: var(--wait-pill-t); }
+    .person-counter.done .pctr-label { color: var(--done-pill-t); }
+
+    /* Override group-header to allow column layout for person view */
+    .group-header > div:first-child { display: flex; flex-direction: column; gap: 0; }
+
+    /* ════════════════════════════════════════════
+       PLAN DE SALLE
+    ════════════════════════════════════════════ */
+    #view-tables { display: none; flex-direction: column; height: calc(100dvh - 57px - 68px); /* header + nav */ overflow: hidden; }
+    #view-tables.active { display: flex; }
+
+    /* Toolbar plan de salle */
+    .floor-toolbar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px; background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0; flex-wrap: wrap;
+    }
+    .floor-toolbar-title {
+      font-family: var(--font-display); font-size: 1rem; letter-spacing: 1.5px;
+      color: var(--muted); text-transform: uppercase; margin-right: 4px;
+    }
+    .floor-btn {
+      background: var(--bg3); border: 1px solid var(--border);
+      color: var(--text); border-radius: 8px; padding: 7px 13px;
+      font-size: 0.82rem; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; gap: 5px;
+      transition: border-color 0.2s, color 0.2s;
+      font-family: var(--font-body);
+    }
+    .floor-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .floor-btn.active { border-color: var(--accent); color: var(--accent); background: #1f1c0a; }
+    .floor-btn.danger:hover { border-color: #ff6b6b; color: #ff6b6b; }
+
+    /* ── CANVAS PAN + ZOOM ── */
+    #floor-canvas-wrapper {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background-color: #0f0f14;
+      cursor: grab;
+      touch-action: none; /* géré manuellement */
+    }
+    #floor-canvas-wrapper.panning { cursor: grabbing; }
+
+    /* Le canvas réel — transformé par JS (translate + scale) */
+    #floor-canvas {
+      position: absolute;
+      width: 3000px; height: 2200px;
+      background: radial-gradient(circle, #2a2a36 1px, transparent 1px);
+      background-size: 30px 30px;
+      background-color: #0f0f14;
+      transform-origin: 0 0;
+      will-change: transform;
+    }
+
+    /* Contrôles flottants zoom */
+    #floor-zoom-controls {
+      position: absolute;
+      bottom: 16px; right: 16px;
+      display: flex; flex-direction: column; gap: 6px;
+      z-index: 50;
+    }
+    .zoom-btn {
+      width: 40px; height: 40px;
       background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 18px; padding: 28px 24px; width: 100%; max-width: 420px;
+      border-radius: 10px; color: var(--text);
+      font-size: 1.2rem; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      font-family: var(--font-body);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
+    .zoom-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .zoom-btn:active { background: var(--bg3); transform: scale(0.93); }
+
+    /* Indicateur de zoom */
+    #floor-zoom-label {
+      text-align: center; font-size: 0.65rem; font-weight: 700;
+      color: var(--muted); letter-spacing: 0.5px;
+    }
+
+    /* Table square */
+    .table-square {
+      position: absolute;
+      width: 86px; height: 86px;
+      border-radius: 14px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      cursor: default;
+      user-select: none;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.55);
+      transition: box-shadow 0.15s, transform 0.15s;
+      border: 2px solid rgba(255,255,255,0.15);
+      overflow: visible;
+    }
+    .table-square.selected { box-shadow: 0 0 0 3px var(--accent), 0 4px 16px rgba(0,0,0,0.5); }
+
+    /* ── DRAG HANDLE (coin sup. droit) ── */
+    .table-drag-handle {
+      position: absolute;
+      top: -8px; right: -8px;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.7);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      cursor: grab;
+      touch-action: none;
+      z-index: 10;
+      transition: background 0.15s, border-color 0.15s, transform 0.15s;
+      color: rgba(255,255,255,0.8);
+    }
+    .table-drag-handle:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #111;
+      transform: scale(1.2);
+    }
+    .table-drag-handle:active { cursor: grabbing; }
+
+    /* ── RESIZE HANDLE (bas centre) ── */
+    .table-resize-handle {
+      position: absolute;
+      bottom: -9px; left: 50%; transform: translateX(-50%);
+      width: 28px; height: 14px;
+      border-radius: 0 0 8px 8px;
+      background: rgba(0,0,0,0.7);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-top: none;
+      display: flex; align-items: center; justify-content: center;
+      cursor: ns-resize;
+      touch-action: none;
+      z-index: 10;
+      transition: background 0.15s, border-color 0.15s;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.55rem;
+      letter-spacing: 1px;
+    }
+    .table-resize-handle:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #111;
+    }
+
+    .table-num {
+      font-family: var(--font-display);
+      font-size: 2.1rem; line-height: 1;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+      pointer-events: none;
+    }
+    .table-badge {
+      font-size: 0.65rem; font-weight: 700;
+      margin-top: 3px; line-height: 1;
+      background: rgba(0,0,0,0.35);
+      border-radius: 10px; padding: 1px 6px;
+      text-shadow: none;
+      pointer-events: none;
+    }
+    .table-badge.all-done { color: #4cdf80; }
+    .table-badge.has-wait { color: #ffaa44; }
+    .table-badge.empty    { color: rgba(255,255,255,0.4); }
+
+    /* ── HOVER POPOVER ── */
+    .table-popover {
+      position: absolute;
+      width: 280px;
+      background: #18181f;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+      z-index: 500;
+      overflow: hidden;
+      pointer-events: auto;
+      opacity: 0;
+      transform: scale(0.95) translateY(4px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    .table-popover.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    .popover-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px 8px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg3);
+    }
+    .popover-title {
+      font-family: var(--font-display); font-size: 1.3rem;
+      letter-spacing: 1.5px; color: var(--accent);
+    }
+    .popover-pills { display: flex; gap: 5px; align-items: center; }
+    .popover-pill {
+      font-size: 0.68rem; font-weight: 700; border-radius: 20px; padding: 2px 7px;
+    }
+    .popover-pill.wait { background: var(--wait-pill-bg); color: var(--wait-pill-t); }
+    .popover-pill.done { background: var(--done-pill-bg); color: var(--done-pill-t); }
+
+    .popover-body { padding: 8px 10px; max-height: 220px; overflow-y: auto; }
+    .popover-song {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 8px; align-items: center;
+      padding: 7px 8px; border-radius: 8px;
+      margin-bottom: 5px;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+      transition: background 0.25s, opacity 0.25s;
+    }
+    .popover-song:last-child { margin-bottom: 0; }
+    .popover-song.status-done { background: var(--done-bg); border-color: var(--done-border); opacity: 0.65; }
+    .popover-song-name  { font-weight: 600; font-size: 0.85rem; }
+    .popover-song-title { font-size: 0.75rem; color: var(--muted); margin-top: 1px; }
+    .popover-empty { text-align: center; padding: 16px; color: var(--muted); font-size: 0.85rem; }
+
+    .popover-status-btn {
+      display: inline-flex; align-items: center; gap: 3px;
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+      padding: 3px 7px; border-radius: 20px; border: none; cursor: pointer;
+      font-family: var(--font-body); transition: transform 0.1s; white-space: nowrap; flex-shrink: 0;
+    }
+    .popover-status-btn:active { transform: scale(0.9); }
+    .popover-status-btn.wait { background: var(--wait-pill-bg); color: var(--wait-pill-t); }
+    .popover-status-btn.done { background: var(--done-pill-bg); color: var(--done-pill-t); }
+
+    .popover-song-row-info { min-width: 0; }
+
+    /* ── POPOVER SINGER GROUPS ── */
+    .popover-singer-group {
+      margin-bottom: 8px;
+    }
+    .popover-singer-group:last-child { margin-bottom: 0; }
+    .popover-singer-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 5px 8px 4px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 7px 7px 0 0;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    .popover-singer-name {
+      font-weight: 700; font-size: 0.82rem; color: var(--text);
+    }
+    .popover-singer-pills { display: flex; gap: 4px; }
+    .popover-singer-pill {
+      font-size: 0.62rem; font-weight: 700; border-radius: 20px; padding: 1px 6px;
+    }
+    .popover-singer-pill.wait { background: var(--wait-pill-bg); color: var(--wait-pill-t); }
+    .popover-singer-pill.done { background: var(--done-pill-bg); color: var(--done-pill-t); }
+
+    /* Songs inside a singer group — no top radius, connect visually */
+    .popover-singer-group .popover-song {
+      border-radius: 0;
+      border-top: none;
+      margin-bottom: 0;
+    }
+    .popover-singer-group .popover-song:last-child {
+      border-radius: 0 0 7px 7px;
+      margin-bottom: 0;
+    }
+
+    /* Edit-mode hint */
+    #floor-edit-hint {
+      display: none;
+      position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+      background: rgba(13,13,15,0.9); border: 1px solid var(--border);
+      color: var(--muted); font-size: 0.78rem; border-radius: 20px;
+      padding: 6px 14px; white-space: nowrap; pointer-events: none;
+    }
+
+    /* ── MODAL TABLE DETAIL (gardé pour compatibilité) ── */
+    #modal-table-detail .modal { max-width: 480px; max-height: 80dvh; overflow-y: auto; padding: 0; }
+    .modal-table-header {
+      padding: 20px 22px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal-table-header h2 { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 2px; color: var(--accent); }
+    .modal-table-close { background: var(--bg3); border: 1px solid var(--border); color: var(--muted); border-radius: 8px; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .modal-table-songs { padding: 12px 16px; }
+    .modal-song-row {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 10px; align-items: center;
+      padding: 10px 12px; border-radius: 10px; margin-bottom: 8px;
+      transition: background 0.3s;
+      border: 1px solid var(--border);
+      background: var(--bg3);
+    }
+    .modal-song-row.status-done { background: var(--done-bg); border-color: var(--done-border); opacity: 0.7; }
+    .modal-song-singer { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+    .modal-song-title  { font-size: 0.82rem; color: var(--muted); }
+
+    /* ── MODAL AJOUTER TABLE ── */
+    #modal-add-table .modal-inner { background: var(--bg2); border: 1px solid var(--border); border-radius: 18px; padding: 24px; width: 100%; max-width: 360px; }
+    #modal-add-table h2 { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 16px; }
+    .color-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .color-swatch {
+      width: 36px; height: 36px; border-radius: 8px;
+      cursor: pointer; border: 2px solid transparent;
+      transition: border-color 0.15s, transform 0.1s;
+    }
+    .color-swatch.selected, .color-swatch:hover { border-color: #fff; transform: scale(1.1); }
+
+    /* ── MODALS GENERIC ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 999; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.active { display: flex; }
+    .modal { background: var(--bg2); border: 1px solid var(--border); border-radius: 18px; padding: 28px 24px; width: 100%; max-width: 420px; }
     .modal h2 { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 6px; }
     .modal p  { color: var(--muted); font-size: 0.88rem; margin-bottom: 18px; line-height: 1.5; }
 
-    /* Firebase setup modal */
-    .setup-step {
-      display: flex; gap: 10px; align-items: flex-start;
-      padding: 10px 12px; background: var(--bg3); border: 1px solid var(--border);
-      border-radius: 10px; margin-bottom: 8px;
-    }
-    .setup-step-num {
-      background: var(--accent); color: #111; font-weight: 700; font-size: 0.8rem;
-      border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center;
-      justify-content: center; flex-shrink: 0; margin-top: 1px;
-    }
+    .setup-step { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; }
+    .setup-step-num { background: var(--accent); color: #111; font-weight: 700; font-size: 0.8rem; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
     .setup-step-text { font-size: 0.85rem; color: var(--text); line-height: 1.5; }
     .setup-step-text strong { color: var(--accent); }
 
     hr { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
-
-    /* ── TOAST ── */
-    #toast {
-      position: fixed; bottom: 82px; left: 50%;
-      transform: translateX(-50%) translateY(30px);
-      background: var(--bg3); border: 1px solid var(--border); color: var(--text);
-      border-radius: 30px; padding: 10px 22px; font-size: 0.9rem; font-weight: 500;
-      z-index: 1000; transition: transform 0.28s ease, opacity 0.28s ease;
-      opacity: 0; white-space: nowrap; pointer-events: none;
-    }
+    #toast { position: fixed; bottom: 82px; left: 50%; transform: translateX(-50%) translateY(30px); background: var(--bg3); border: 1px solid var(--border); color: var(--text); border-radius: 30px; padding: 10px 22px; font-size: 0.9rem; font-weight: 500; z-index: 1000; transition: transform 0.28s ease, opacity 0.28s ease; opacity: 0; white-space: nowrap; pointer-events: none; }
     #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-
-    /* ── OFFLINE BANNER ── */
-    #offline-banner {
-      display: none; background: #2a1500; border-bottom: 1px solid #7a4200;
-      color: #ffaa44; text-align: center; padding: 8px; font-size: 0.82rem; font-weight: 600;
-    }
+    #offline-banner { display: none; background: #2a1500; border-bottom: 1px solid #7a4200; color: #ffaa44; text-align: center; padding: 8px; font-size: 0.82rem; font-weight: 600; }
 
     @media (max-width: 400px) { .form-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
-<!-- Offline banner -->
 <div id="offline-banner">⚠️ Hors ligne — les modifications seront synchronisées à la reconnexion</div>
 
 <div id="app">
@@ -310,14 +582,11 @@
   <!-- HEADER -->
   <header>
     <div class="header-left">
-      <h1>🎤 KAROTRUM</h1>
+      <h1>🎤 KARATRUM</h1>
       <div class="badge-count" id="badge-count" style="display:none">0</div>
     </div>
     <div style="display:flex;align-items:center;gap:8px">
-      <div id="sync-status" class="syncing">
-        <div class="dot"></div>
-        <span id="sync-label">Connexion…</span>
-      </div>
+      <div id="sync-status" class="syncing"><div class="dot"></div><span id="sync-label">Connexion…</span></div>
       <button class="btn-settings" onclick="openSettings()">⚙️</button>
     </div>
   </header>
@@ -328,8 +597,8 @@
       <div class="section-title">Saisie manuelle</div>
       <div class="card">
         <div class="form-grid">
-          <div><label>Prénom</label><input type="text" id="inp-prenom" placeholder="Marie" autocomplete="off" /></div>
-          <div><label>N° Table</label><input type="text" id="inp-table" placeholder="12" autocomplete="off" /></div>
+          <div class="autocomplete-wrap"><label>Prénom</label><input type="text" id="inp-prenom" placeholder="Marie" autocomplete="off" oninput="acInput(this,'ac-prenom')" onkeydown="acKey(event,'ac-prenom')" onblur="acBlur('ac-prenom')" /><div id="ac-prenom" class="autocomplete-list" style="display:none"></div></div>
+          <div class="autocomplete-wrap"><label>N° Table</label><input type="text" id="inp-table" placeholder="12" autocomplete="off" oninput="acInput(this,'ac-table','table')" onkeydown="acKey(event,'ac-table')" onblur="acBlur('ac-table')" /><div id="ac-table" class="autocomplete-list" style="display:none"></div></div>
           <div><label>Artiste</label><input type="text" id="inp-artiste" placeholder="Céline Dion" autocomplete="off" /></div>
           <div><label>Titre</label><input type="text" id="inp-titre" placeholder="My Heart Will Go On" autocomplete="off" onkeydown="if(event.key==='Enter')addSongManual()" /></div>
         </div>
@@ -340,24 +609,11 @@
       <div class="section-title">Scanner un bon ✦</div>
       <div class="card">
         <input type="file" id="file-input" accept="image/*" capture="environment" style="display:none" onchange="handleImageSelected(event)" />
-        <button class="btn btn-scan" onclick="document.getElementById('file-input').click()">📷 Scanner un bon papier</button>
-        <div id="scan-preview"><img id="scan-img" src="" alt="Aperçu" /></div>
-        <div id="scan-loading"><div class="spinner"></div><p>Analyse en cours…</p></div>
+        <label for="file-input" class="btn btn-scan" style="cursor:pointer;margin-top:10px">
+          📷 Scanner un bon papier
+        </label>
+        <div id="scan-loading" style="margin-top:10px"><div class="spinner"></div><p>Analyse en cours…</p></div>
         <div id="scan-error"></div>
-        <div id="scan-form">
-          <hr style="margin:14px 0" />
-          <p style="font-size:.82rem;color:var(--muted);margin-bottom:12px">✅ Données extraites — vérifiez et confirmez :</p>
-          <div class="form-grid">
-            <div><label>Prénom</label><input type="text" id="scan-prenom" /></div>
-            <div><label>N° Table</label><input type="text" id="scan-table" /></div>
-            <div><label>Artiste</label><input type="text" id="scan-artiste" /></div>
-            <div><label>Titre</label><input type="text" id="scan-titre" /></div>
-          </div>
-          <div style="display:flex;gap:10px;margin-top:12px">
-            <button class="btn btn-confirm" style="flex:1" onclick="confirmScanAdd()">✔ Confirmer l'ajout</button>
-            <button class="btn btn-muted" onclick="cancelScan()">Annuler</button>
-          </div>
-        </div>
       </div>
     </section>
   </div>
@@ -376,15 +632,29 @@
     </section>
   </div>
 
-  <!-- ══ VUE PAR TABLE ══ -->
+  <!-- ══ VUE PAR TABLE — PLAN DE SALLE ══ -->
   <div id="view-tables" class="view">
-    <section>
-      <div class="section-title">Par table</div>
-      <div id="table-list"></div>
-      <div id="empty-tables" class="empty-state" style="display:none">
-        <div class="icon">🍽️</div><p>Aucune demande pour l'instant.</p>
+
+    <!-- Toolbar -->
+    <div class="floor-toolbar">
+      <span class="floor-toolbar-title">Plan de salle</span>
+      <button class="floor-btn" id="btn-add-table-sq" onclick="openAddTable()">＋ Table</button>
+      <button class="floor-btn danger" id="btn-delete-sel" onclick="deleteSelectedTable()" style="display:none">🗑 Supprimer sélection</button>
+    </div>
+
+    <!-- Zone pan+zoom -->
+    <div id="floor-canvas-wrapper">
+      <div id="floor-canvas">
+        <div id="floor-edit-hint">✏️ Mode déplacement — glissez les tables, retappez pour quitter</div>
       </div>
-    </section>
+      <!-- Contrôles zoom flottants -->
+      <div id="floor-zoom-controls">
+        <button class="zoom-btn" onclick="floorZoom(1.25)" title="Zoom +">＋</button>
+        <div id="floor-zoom-label">100%</div>
+        <button class="zoom-btn" onclick="floorZoom(0.8)" title="Zoom −">－</button>
+        <button class="zoom-btn" onclick="floorResetView()" title="Recentrer" style="font-size:0.85rem">⌖</button>
+      </div>
+    </div>
   </div>
 
   <!-- ══ VUE PAR PERSONNE ══ -->
@@ -400,7 +670,29 @@
 
 </div><!-- #app -->
 
-<!-- BOTTOM NAV -->
+<!-- ══ MODALE SCAN MULTI-BLOCS (plein écran) ══ -->
+<div id="modal-scan">
+  <div class="scan-modal-header">
+    <h2>📷 BON SCANNÉ</h2>
+    <div class="scan-modal-header-right">
+      <img id="scan-thumb" class="scan-photo-thumb" src="" alt="Photo" onclick="scanZoomThumb()" title="Voir la photo" />
+      <button class="btn-settings" onclick="closeScanModal()" title="Fermer" style="color:#ff8080">✕</button>
+    </div>
+  </div>
+
+  <div class="scan-modal-body" id="scan-blocks-container">
+    <!-- Blocs générés dynamiquement -->
+  </div>
+
+  <div class="scan-modal-footer">
+    <button class="btn btn-muted" style="flex:0 0 auto" onclick="scanAddBlock()">＋ Bloc</button>
+    <button class="btn btn-primary" style="margin-top:0;flex:1" onclick="confirmAllScanBlocks()">
+      ✔ Tout confirmer
+    </button>
+  </div>
+</div>
+
+<!-- NAV -->
 <nav>
   <button class="nav-tab active" id="tab-add"     onclick="switchTab('add')"><span class="nav-icon">➕</span>Ajouter</button>
   <button class="nav-tab"        id="tab-list"    onclick="switchTab('list')"><span class="nav-icon">🎵</span>Liste</button>
@@ -410,7 +702,34 @@
 
 <div id="toast"></div>
 
-<!-- MODAL ÉDITION -->
+<!-- MODAL DÉTAIL TABLE -->
+<div id="modal-table-detail" class="modal-overlay">
+  <div class="modal" style="padding:0;max-height:80dvh;overflow-y:auto">
+    <div class="modal-table-header">
+      <h2 id="modal-table-title">TABLE 1</h2>
+      <button class="modal-table-close" onclick="closeTableDetail()">✕</button>
+    </div>
+    <div class="modal-table-songs" id="modal-table-songs"></div>
+  </div>
+</div>
+
+<!-- MODAL AJOUTER TABLE -->
+<div id="modal-add-table" class="modal-overlay">
+  <div class="modal">
+    <h2>NOUVELLE TABLE</h2>
+    <p>Choisissez un numéro et une couleur pour cette table.</p>
+    <label>Numéro de table</label>
+    <input type="text" id="new-table-num" placeholder="ex: 5" style="margin-bottom:14px" />
+    <label style="margin-bottom:8px">Couleur</label>
+    <div class="color-grid" id="color-grid"></div>
+    <div style="display:flex;gap:10px;margin-top:4px">
+      <button class="btn btn-primary" style="margin-top:0;flex:1" onclick="confirmAddTable()">Créer la table</button>
+      <button class="btn btn-muted" onclick="closeAddTable()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ÉDITION SONG -->
 <div id="modal-edit" class="modal-overlay">
   <div class="modal">
     <h2>MODIFIER</h2>
@@ -429,30 +748,25 @@
   </div>
 </div>
 
-<!-- MODAL PARAMÈTRES (Clé API + Firebase) -->
+<!-- MODAL PARAMÈTRES -->
 <div id="modal-api" class="modal-overlay">
   <div class="modal">
     <h2>PARAMÈTRES</h2>
     <p>Clé API Anthropic pour le scan de bons photo.</p>
     <label>Clé Anthropic (sk-ant-...)</label>
     <input type="password" id="input-apikey" placeholder="sk-ant-api03-..." style="margin-bottom:16px" />
-
     <hr style="margin-bottom:16px" />
-
     <p style="margin-bottom:10px">🔥 Firebase — synchronisation temps réel</p>
-
     <div class="setup-step">
       <div class="setup-step-num">1</div>
-      <div class="setup-step-text">Va sur <strong>console.firebase.google.com</strong> → ton projet → <strong>Realtime Database</strong> → copie l'URL (ex: https://karatrum-9130d-default-rtdb.europe-west1.firebasedatabase.app)</div>
+      <div class="setup-step-text">Va sur <strong>console.firebase.google.com</strong> → projet → <strong>Realtime Database</strong> → copie l'URL</div>
     </div>
     <div class="setup-step">
       <div class="setup-step-num">2</div>
-      <div class="setup-step-text">Règles de sécurité → colle : <strong>{ "rules": { ".read": true, ".write": true } }</strong></div>
+      <div class="setup-step-text">Règles → <strong>{ "rules": { ".read": true, ".write": true } }</strong></div>
     </div>
-
     <label style="margin-top:12px">URL Realtime Database</label>
     <input type="text" id="input-dburl" placeholder="https://karatrum-9130d-default-rtdb.europe-west1.firebasedatabase.app" style="margin-bottom:16px" />
-
     <div style="display:flex;gap:10px">
       <button class="btn btn-primary" style="margin-top:0;flex:1" onclick="saveSettings()">Enregistrer</button>
       <button class="btn btn-muted" id="btn-cancel-modal" onclick="closeSettings()">Annuler</button>
@@ -462,16 +776,14 @@
 
 <!-- Firebase SDK -->
 <script type="module">
-  import { initializeApp }          from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-  import { getDatabase, ref, onValue, set, push, remove, update }
+  import { initializeApp }     from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+  import { getDatabase, ref, onValue, set }
     from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';
 
   /* ================================================================
-     KaroTrum · Firebase Realtime Database · Vanilla JS
-     Sync temps réel entre tous les appareils connectés
+     Karatrum · Plan de salle interactif + Firebase sync
   ================================================================ */
 
-  // ── CONFIG FIREBASE ──────────────────────────────────────────────
   const FIREBASE_CONFIG = {
     apiKey:            "AIzaSyBLl4m25UJEDa0sALyImCxKySQ2lgoGUSw",
     authDomain:        "karatrum-9130d.firebaseapp.com",
@@ -479,108 +791,105 @@
     storageBucket:     "karatrum-9130d.firebasestorage.app",
     messagingSenderId: "424774753243",
     appId:             "1:424774753243:web:df17c335179d263190e5fe",
-    // databaseURL sera complété depuis localStorage si renseigné
   };
 
-  // ── ÉTAT LOCAL ───────────────────────────────────────────────────
-  let songs      = [];   // source de vérité locale (miroir Firebase)
+  // ── ÉTAT ─────────────────────────────────────────────────────────
+  let songs      = [];
+  let tableSquares = []; // { id, num, color, x, y }
   let currentTab = 'add';
-  let db         = null;
-  let songsRef   = null;
+  let db = null, songsRef = null, tablesRef = null;
   let pendingImageBase64 = null, pendingImageType = 'image/jpeg';
-  let _ignoreNextUpdate = false; // évite les boucles lors d'écritures locales
 
-  // ── FIREBASE INIT ────────────────────────────────────────────────
+  // Plan de salle
+  let selectedTableId = null;
+  let newTableColor   = '#c0392b';
+  let dragState       = null; // { id, startX, startY, origX, origY }
+
+  const TABLE_COLORS = [
+    '#c0392b','#e67e22','#f7c948','#27ae60','#1abc9c',
+    '#2980b9','#8e44ad','#e84393','#607d8b','#795548',
+    '#34495e','#00bcd4',
+  ];
+
+  // ── FIREBASE ──────────────────────────────────────────────────────
   function initFirebase() {
-    const dbUrl = localStorage.getItem('karotrum_dburl') ||
+    const dbUrl = localStorage.getItem('karatrum_dburl') ||
       'https://karatrum-9130d-default-rtdb.europe-west1.firebasedatabase.app';
-
-    const config = { ...FIREBASE_CONFIG, databaseURL: dbUrl };
-
     try {
-      const app = initializeApp(config);
-      db       = getDatabase(app);
-      songsRef = ref(db, 'songs');
-      setSyncStatus('syncing', 'Connexion…');
+      const app = initializeApp({ ...FIREBASE_CONFIG, databaseURL: dbUrl });
+      db = getDatabase(app);
+      songsRef  = ref(db, 'songs');
+      tablesRef = ref(db, 'tableSquares');
+      setSyncStatus('syncing','Connexion…');
 
-      // Écoute temps réel : toute modification Firebase → mise à jour locale
-      onValue(songsRef, (snapshot) => {
-        const data = snapshot.val();
-        if (data && typeof data === 'object') {
-          // Firebase stocke un objet indexé par clé ; on reconstitue le tableau
-          // en préservant l'ordre via le champ `order`
-          songs = Object.entries(data)
-            .map(([fbKey, song]) => ({ ...song, _fbKey: fbKey }))
-            .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-        } else {
-          songs = [];
-        }
-        setSyncStatus('synced', 'Synchronisé');
+      onValue(songsRef, snap => {
+        const d = snap.val();
+        songs = d && typeof d === 'object'
+          ? Object.entries(d).map(([k,s])=>({...s,_fbKey:k})).sort((a,b)=>(a.order??0)-(b.order??0))
+          : [];
+        setSyncStatus('synced','Synchronisé');
         render();
-      }, (error) => {
-        setSyncStatus('error', 'Erreur sync');
-        console.error('Firebase error:', error);
-        showToast('⚠️ Erreur de synchronisation Firebase');
+      }, () => setSyncStatus('error','Erreur sync'));
+
+      onValue(tablesRef, snap => {
+        const d = snap.val();
+        tableSquares = d && typeof d === 'object'
+          ? Object.entries(d).map(([k,t])=>({...t,id:k}))
+          : [];
+        renderFloor();
       });
 
-    } catch (e) {
-      setSyncStatus('error', 'Non connecté');
-      console.error('Firebase init error:', e);
-    }
+    } catch(e) { setSyncStatus('error','Non connecté'); console.error(e); }
   }
 
-  // ── SYNC STATUS UI ───────────────────────────────────────────────
   function setSyncStatus(state, label) {
-    const el = document.getElementById('sync-status');
-    el.className = state;
+    document.getElementById('sync-status').className = state;
     document.getElementById('sync-label').textContent = label;
   }
 
-  // ── ÉCRITURE FIREBASE ────────────────────────────────────────────
-  // Réécrit toute la liste avec les indices d'ordre
-  async function persistToFirebase() {
-    if (!db || !songsRef) return;
-    setSyncStatus('syncing', 'Enregistrement…');
+  async function persistSongs() {
+    if (!songsRef) return;
+    setSyncStatus('syncing','Enregistrement…');
     try {
-      // On réécrit le nœud entier avec un objet keyed par song.id
       const obj = {};
-      songs.forEach((s, i) => {
-        const { _fbKey, ...clean } = s; // on enlève _fbKey du payload
-        obj[s.id] = { ...clean, order: i };
-      });
+      songs.forEach((s,i) => { const {_fbKey,...c}=s; obj[s.id]={...c,order:i}; });
       await set(songsRef, obj);
-      setSyncStatus('synced', 'Synchronisé');
-    } catch (e) {
-      setSyncStatus('error', 'Erreur sync');
-      showToast('⚠️ Impossible de sauvegarder');
-      console.error(e);
-    }
+      setSyncStatus('synced','Synchronisé');
+    } catch(e) { setSyncStatus('error','Erreur sync'); }
+  }
+
+  async function persistTables() {
+    if (!tablesRef) return;
+    try {
+      const obj = {};
+      tableSquares.forEach(t => { const {id,...rest}=t; obj[t.id]=rest; });
+      await set(tablesRef, Object.keys(obj).length ? obj : null);
+    } catch(e) { console.error(e); }
   }
 
   // ── NAVIGATION ───────────────────────────────────────────────────
   window.switchTab = function(tab) {
     currentTab = tab;
     ['add','list','tables','persons'].forEach(t => {
-      document.getElementById('view-' + t).classList.toggle('active', t === tab);
-      document.getElementById('tab-'  + t).classList.toggle('active', t === tab);
+      document.getElementById('view-'+t).classList.toggle('active', t===tab);
+      document.getElementById('tab-'+t).classList.toggle('active', t===tab);
     });
-    if (tab === 'list')    renderList();
-    if (tab === 'tables')  renderTables();
-    if (tab === 'persons') renderPersons();
+    if (tab==='list')    renderList();
+    if (tab==='tables')  renderFloor();
+    if (tab==='persons') renderPersons();
   };
 
-  // ── RENDER HUB ───────────────────────────────────────────────────
   function render() {
     updateBadge();
-    if (currentTab === 'list')    renderList();
-    if (currentTab === 'tables')  renderTables();
-    if (currentTab === 'persons') renderPersons();
+    if (currentTab==='list')    renderList();
+    if (currentTab==='tables')  renderFloor();
+    if (currentTab==='persons') renderPersons();
   }
 
   function updateBadge() {
-    const n  = songs.filter(s => s.status === 'wait').length;
+    const n = songs.filter(s=>s.status==='wait').length;
     const el = document.getElementById('badge-count');
-    el.textContent = n; el.style.display = n > 0 ? '' : 'none';
+    el.textContent = n; el.style.display = n>0?'':'none';
   }
 
   function esc(v) {
@@ -588,172 +897,826 @@
     return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  // ── STATUS HELPERS ───────────────────────────────────────────────
+  // ── AUTOCOMPLETE PRÉNOM ──────────────────────────────────────────
+  let _acFocusIdx = -1;
+
+  function getKnownPrenoms() {
+    const set = new Set();
+    songs.forEach(s => { if (s.prenom && s.prenom.trim()) set.add(s.prenom.trim()); });
+    return [...set].sort((a,b) => a.localeCompare(b,'fr',{sensitivity:'base'}));
+  }
+
+  function getKnownTables() {
+    const set = new Set();
+    songs.forEach(s => { if (s.table && s.table.toString().trim()) set.add(s.table.toString().trim()); });
+    tableSquares.forEach(t => { if (t.num) set.add(t.num.toString().trim()); });
+    return [...set].sort((a,b) => {
+      const na=Number(a), nb=Number(b);
+      if (!isNaN(na)&&!isNaN(nb)) return na-nb;
+      return a.localeCompare(b,'fr',{sensitivity:'base'});
+    });
+  }
+
+  window.acInput = function(input, listId, mode) {
+    const q   = input.value.trim().toLowerCase();
+    const list = document.getElementById(listId);
+    _acFocusIdx = -1;
+    if (!q) { list.style.display='none'; return; }
+    const source  = mode==='table' ? getKnownTables() : getKnownPrenoms();
+    const matches = source.filter(p => p.toLowerCase().startsWith(q));
+    if (!matches.length) { list.style.display='none'; return; }
+    list.innerHTML = matches.slice(0,6).map((p,i) => {
+      const hi = `<mark>${esc(p.slice(0,q.length))}</mark>${esc(p.slice(q.length))}`;
+      return `<div class="autocomplete-item" data-val="${esc(p)}" data-input="${input.id}" onmousedown="acSelect('${input.id}','${listId}','${esc(p)}')">${hi}</div>`;
+    }).join('');
+    list.style.display = 'block';
+  };
+
+  window.acSelect = function(inputId, listId, val) {
+    document.getElementById(inputId).value = val;
+    document.getElementById(listId).style.display = 'none';
+    _acFocusIdx = -1;
+  };
+
+  window.acBlur = function(listId) {
+    // Petit délai pour laisser onmousedown se déclencher d'abord
+    setTimeout(() => {
+      const list = document.getElementById(listId);
+      if (list) list.style.display = 'none';
+      _acFocusIdx = -1;
+    }, 150);
+  };
+
+  window.acKey = function(e, listId) {
+    const list = document.getElementById(listId);
+    if (!list || list.style.display==='none') return;
+    const items = list.querySelectorAll('.autocomplete-item');
+    if (!items.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      _acFocusIdx = Math.min(_acFocusIdx+1, items.length-1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      _acFocusIdx = Math.max(_acFocusIdx-1, 0);
+    } else if (e.key === 'Enter' && _acFocusIdx >= 0) {
+      e.preventDefault();
+      items[_acFocusIdx].dispatchEvent(new MouseEvent('mousedown'));
+      return;
+    } else if (e.key === 'Escape') {
+      list.style.display='none'; _acFocusIdx=-1; return;
+    } else { return; }
+    items.forEach((el,i) => el.classList.toggle('focused', i===_acFocusIdx));
+  };
+
+  // ── STATUS ───────────────────────────────────────────────────────
   function statusBtnHTML(id, status) {
-    return status === 'wait'
+    return status==='wait'
       ? `<button class="status-btn wait" onclick="toggleStatus('${id}')">⏳ En attente</button>`
       : `<button class="status-btn done" onclick="toggleStatus('${id}')">✔ Chantée</button>`;
   }
   function rowStatusBtnHTML(id, status) {
-    return status === 'wait'
+    return status==='wait'
       ? `<button class="row-status-btn wait" onclick="toggleStatus('${id}')">⏳ En attente</button>`
       : `<button class="row-status-btn done" onclick="toggleStatus('${id}')">✔ Chantée</button>`;
   }
 
   window.toggleStatus = function(id) {
-    const s = songs.find(x => x.id === id); if (!s) return;
-    s.status = s.status === 'wait' ? 'done' : 'wait';
-    persistToFirebase();
-    render(); // mise à jour UI immédiate
+    const s = songs.find(x=>x.id===id); if (!s) return;
+    s.status = s.status==='wait' ? 'done' : 'wait';
+    persistSongs(); render();
+    // Rafraîchir le modal si ouvert
+    const modal = document.getElementById('modal-table-detail');
+    if (modal.classList.contains('active')) {
+      const t = tableSquares.find(t => String(t.num) === String(_openDetailNum));
+      if (t) renderTableDetail(t.num);
+    }
   };
 
   // ── VUE LISTE ────────────────────────────────────────────────────
   function renderList() {
-    const ul    = document.getElementById('song-list');
+    const ul = document.getElementById('song-list');
     const empty = document.getElementById('empty-list');
-    if (!songs.length) { ul.innerHTML = ''; empty.style.display = ''; return; }
-    empty.style.display = 'none';
-    ul.innerHTML = songs.map((s, i) => `
+    if (!songs.length) { ul.innerHTML=''; empty.style.display=''; return; }
+    empty.style.display='none';
+    ul.innerHTML = songs.map((s,i) => `
       <li class="song-item status-${s.status}" draggable="true" data-id="${s.id}" data-index="${i}">
-        <div class="drag-handle" title="Glisser pour réordonner">⠿</div>
+        <div class="drag-handle">⠿</div>
         <div class="song-info">
           <div class="song-name">${esc(s.prenom)}</div>
           <div class="song-details">🎵 ${esc(s.titre)} — ${esc(s.artiste)}</div>
           <div class="song-meta">
             <span class="tag-table">Table ${esc(s.table)}</span>
             <span class="tag-time">${s.time}</span>
-            ${statusBtnHTML(s.id, s.status)}
+            ${statusBtnHTML(s.id,s.status)}
           </div>
         </div>
-        <div class="song-actions">
-          <div class="btn-row">
-            <button class="btn-icon edit" onclick="openEdit('${s.id}')" title="Modifier">✏️</button>
-            <button class="btn-icon del"  onclick="deleteSong('${s.id}')" title="Supprimer">✕</button>
-          </div>
-        </div>
+        <div class="song-actions"><div class="btn-row">
+          <button class="btn-icon edit" onclick="openEdit('${s.id}')">✏️</button>
+          <button class="btn-icon del"  onclick="deleteSong('${s.id}')">✕</button>
+        </div></div>
       </li>`).join('');
     initDnD();
   }
 
-  // ── VUE PAR TABLE ────────────────────────────────────────────────
-  function renderTables() {
-    const container = document.getElementById('table-list');
-    const empty     = document.getElementById('empty-tables');
-    if (!songs.length) { container.innerHTML = ''; empty.style.display = ''; return; }
-    empty.style.display = 'none';
-    const groups = groupBy(songs, s => s.table || '—');
-    const keys   = Object.keys(groups).sort((a,b) => {
-      if (a==='—') return 1; if (b==='—') return -1;
-      return Number(a)-Number(b) || a.localeCompare(b);
-    });
-    container.innerHTML = keys.map(key => buildGroupHTML(
-      `TABLE ${esc(key)}`, groups[key],
-      s => `🎵 ${esc(s.titre)} — ${esc(s.artiste)}`,
-      s => esc(s.prenom)
-    )).join('');
-  }
-
   // ── VUE PAR PERSONNE ─────────────────────────────────────────────
   function renderPersons() {
-    const container = document.getElementById('person-list');
-    const empty     = document.getElementById('empty-persons');
-    if (!songs.length) { container.innerHTML = ''; empty.style.display = ''; return; }
-    empty.style.display = 'none';
-    const groups = groupBy(songs, s => (s.prenom||'—').trim());
-    const keys   = Object.keys(groups).sort((a,b) => {
-      if (a==='—') return 1; if (b==='—') return -1;
-      return a.localeCompare(b, 'fr', { sensitivity:'base' });
+    const c = document.getElementById('person-list');
+    const e = document.getElementById('empty-persons');
+    if (!songs.length) { c.innerHTML=''; e.style.display=''; return; }
+    e.style.display='none';
+    const groups = groupBy(songs, s=>(s.prenom||'—').trim());
+    const keys = Object.keys(groups).sort((a,b)=>{
+      if(a==='—') return 1; if(b==='—') return -1;
+      return a.localeCompare(b,'fr',{sensitivity:'base'});
     });
-    container.innerHTML = keys.map(key => buildGroupHTML(
+    c.innerHTML = keys.map(key => buildGroupHTML(
       esc(key).toUpperCase(), groups[key],
-      s => `🎵 ${esc(s.titre)} — ${esc(s.artiste)}`,
-      s => `Table ${esc(s.table)}`
+      s=>`🎵 ${esc(s.titre)} — ${esc(s.artiste)}`,
+      s=>`Table ${esc(s.table)}`,
+      true
     )).join('');
   }
 
-  // ── GROUP HELPERS ────────────────────────────────────────────────
-  function groupBy(arr, keyFn) {
-    return arr.reduce((acc, item) => {
-      const k = keyFn(item); (acc[k] = acc[k]||[]).push(item); return acc;
-    }, {});
+  function groupBy(arr, fn) {
+    return arr.reduce((a,i)=>{ const k=fn(i); (a[k]=a[k]||[]).push(i); return a; },{});
   }
 
-  function buildGroupHTML(title, items, detailFn, subFn) {
-    const waitCount = items.filter(s => s.status==='wait').length;
-    const doneCount = items.length - waitCount;
+  function buildGroupHTML(title, items, detailFn, subFn, showCounters) {
+    const wc = items.filter(s=>s.status==='wait').length;
+    const dc = items.length - wc;
     const pillsHTML = [
-      waitCount ? `<span class="group-pill wait">⏳ ${waitCount}</span>` : '',
-      doneCount ? `<span class="group-pill done">✔ ${doneCount}</span>`  : ''
+      wc ? `<span class="group-pill wait">⏳ ${wc}</span>` : '',
+      dc ? `<span class="group-pill done">✔ ${dc}</span>`  : ''
     ].join('');
-    const rowsHTML = items.map(s => `
-      <div class="group-row status-${s.status}">
-        <div>
-          <div class="group-row-name">${detailFn(s)}</div>
-          <div class="group-row-detail">${subFn(s)} · ${s.time}</div>
-        </div>
-        ${rowStatusBtnHTML(s.id, s.status)}
-      </div>`).join('');
+
+    // Compteurs visuels (vue Personnes uniquement)
+    const countersHTML = showCounters ? `
+      <div class="person-counters">
+        ${wc ? `<div class="person-counter wait"><span class="pctr-icon">⏳</span><span class="pctr-num">${wc}</span><span class="pctr-label">en attente</span></div>` : ''}
+        ${dc ? `<div class="person-counter done"><span class="pctr-icon">✔</span><span class="pctr-num">${dc}</span><span class="pctr-label">chantée${dc>1?'s':''}</span></div>` : ''}
+      </div>` : '';
+
     return `
       <div class="group-block">
         <div class="group-header">
-          <span class="group-title">${title}</span>
+          <div>
+            <span class="group-title">${title}</span>
+            ${countersHTML}
+          </div>
           <div class="group-pills">${pillsHTML}</div>
         </div>
-        ${rowsHTML}
+        ${items.map(s=>`
+          <div class="group-row status-${s.status}">
+            <div>
+              <div class="group-row-name">${detailFn(s)}</div>
+              <div class="group-row-detail">${subFn(s)} · ${s.time}</div>
+            </div>
+            ${rowStatusBtnHTML(s.id,s.status)}
+          </div>`).join('')}
       </div>`;
   }
 
-  // ── DRAG & DROP ──────────────────────────────────────────────────
-  let dragSrcIndex = null;
+  // ════════════════════════════════════════════════════════════════
+  //   PLAN DE SALLE — PAN + ZOOM
+  // ════════════════════════════════════════════════════════════════
 
+  // Viewport transform state
+  let _vpX = 0, _vpY = 0, _vpScale = 1;
+  const VP_SCALE_MIN = 0.2, VP_SCALE_MAX = 3;
+
+  function applyViewport() {
+    const canvas = document.getElementById('floor-canvas');
+    canvas.style.transform = `translate(${_vpX}px,${_vpY}px) scale(${_vpScale})`;
+    const label = document.getElementById('floor-zoom-label');
+    if (label) label.textContent = Math.round(_vpScale * 100) + '%';
+  }
+
+  // Zoom centré sur un point (cx,cy) dans le wrapper
+  function zoomAt(factor, cx, cy) {
+    const newScale = Math.min(VP_SCALE_MAX, Math.max(VP_SCALE_MIN, _vpScale * factor));
+    const realFactor = newScale / _vpScale;
+    _vpX = cx - realFactor * (cx - _vpX);
+    _vpY = cy - realFactor * (cy - _vpY);
+    _vpScale = newScale;
+    applyViewport();
+  }
+
+  window.floorZoom = function(factor) {
+    const wrapper = document.getElementById('floor-canvas-wrapper');
+    const cx = wrapper.offsetWidth  / 2;
+    const cy = wrapper.offsetHeight / 2;
+    zoomAt(factor, cx, cy);
+  };
+
+  // Recentre la vue sur les tables existantes (ou centre du canvas)
+  window.floorResetView = function() {
+    const wrapper = document.getElementById('floor-canvas-wrapper');
+    const wW = wrapper.offsetWidth, wH = wrapper.offsetHeight;
+
+    if (!tableSquares.length) {
+      _vpScale = 1;
+      _vpX = wW / 2 - 1500;
+      _vpY = wH / 2 - 1100;
+      applyViewport(); return;
+    }
+
+    // Bounding box de toutes les tables
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    tableSquares.forEach(t => {
+      const w = t.w || 86, h = t.h || 86;
+      minX = Math.min(minX, t.x); minY = Math.min(minY, t.y);
+      maxX = Math.max(maxX, t.x + w); maxY = Math.max(maxY, t.y + h);
+    });
+
+    const PADDING = 80;
+    const contentW = maxX - minX + PADDING * 2;
+    const contentH = maxY - minY + PADDING * 2;
+    const scaleX = wW / contentW, scaleY = wH / contentH;
+    _vpScale = Math.min(VP_SCALE_MAX, Math.max(VP_SCALE_MIN, Math.min(scaleX, scaleY)));
+    _vpX = (wW - contentW * _vpScale) / 2 - (minX - PADDING) * _vpScale;
+    _vpY = (wH - contentH * _vpScale) / 2 - (minY - PADDING) * _vpScale;
+    applyViewport();
+  };
+
+  // Initialise les événements pan+zoom sur le wrapper
+  function initFloorViewport() {
+    const wrapper = document.getElementById('floor-canvas-wrapper');
+    if (wrapper._vpInited) return;
+    wrapper._vpInited = true;
+
+    // ── MOUSE PAN ──────────────────────────────────────────────────
+    let _panStart = null;
+    wrapper.addEventListener('mousedown', e => {
+      // Ignorer si on clique sur une poignée de table
+      if (e.target.closest('.table-drag-handle') || e.target.closest('.table-resize-handle')
+          || e.target.closest('.table-square') || e.target.closest('#floor-zoom-controls')) return;
+      _panStart = { x: e.clientX - _vpX, y: e.clientY - _vpY };
+      wrapper.classList.add('panning');
+    });
+    window.addEventListener('mousemove', e => {
+      if (!_panStart) return;
+      _vpX = e.clientX - _panStart.x;
+      _vpY = e.clientY - _panStart.y;
+      applyViewport();
+    });
+    window.addEventListener('mouseup', () => {
+      _panStart = null; wrapper.classList.remove('panning');
+    });
+
+    // ── WHEEL ZOOM ─────────────────────────────────────────────────
+    wrapper.addEventListener('wheel', e => {
+      e.preventDefault();
+      const rect = wrapper.getBoundingClientRect();
+      const cx = e.clientX - rect.left;
+      const cy = e.clientY - rect.top;
+      const factor = e.deltaY < 0 ? 1.12 : 0.89;
+      zoomAt(factor, cx, cy);
+    }, { passive: false });
+
+    // ── TOUCH PAN + PINCH ──────────────────────────────────────────
+    let _touches = [];
+    let _lastDist = null, _lastMid = null;
+
+    wrapper.addEventListener('touchstart', e => {
+      // Si 1 doigt sur une poignée → laisser le drag/resize gérer
+      if (e.touches.length === 1 &&
+          (e.target.closest('.table-drag-handle') || e.target.closest('.table-resize-handle'))) return;
+      e.preventDefault();
+      _touches = Array.from(e.touches);
+      if (_touches.length === 2) {
+        _lastDist = getTouchDist(_touches);
+        _lastMid  = getTouchMid(_touches, wrapper);
+      } else if (_touches.length === 1) {
+        _lastMid = { x: _touches[0].clientX - _vpX, y: _touches[0].clientY - _vpY };
+      }
+    }, { passive: false });
+
+    wrapper.addEventListener('touchmove', e => {
+      e.preventDefault();
+      _touches = Array.from(e.touches);
+      if (_touches.length === 2) {
+        // Pinch zoom + pan simultané
+        const dist = getTouchDist(_touches);
+        const mid  = getTouchMid(_touches, wrapper);
+        if (_lastDist && _lastMid) {
+          const factor = dist / _lastDist;
+          zoomAt(factor, mid.x, mid.y);
+          // Pan résiduel
+          _vpX += mid.x - _lastMid.x * (_vpScale / (_vpScale / factor));
+          _vpY += mid.y - _lastMid.y * (_vpScale / (_vpScale / factor));
+          applyViewport();
+        }
+        _lastDist = dist; _lastMid = mid;
+      } else if (_touches.length === 1 && _lastMid && !dragState && !resizeState) {
+        // Pan 1 doigt (si pas de drag de table en cours)
+        if (e.target.closest('.table-drag-handle') || e.target.closest('.table-resize-handle')) return;
+        _vpX = _touches[0].clientX - _lastMid.x;
+        _vpY = _touches[0].clientY - _lastMid.y;
+        applyViewport();
+      }
+    }, { passive: false });
+
+    wrapper.addEventListener('touchend', e => {
+      _touches = Array.from(e.touches);
+      _lastDist = null;
+      if (_touches.length === 1) {
+        _lastMid = { x: _touches[0].clientX - _vpX, y: _touches[0].clientY - _vpY };
+      } else {
+        _lastMid = null;
+      }
+    });
+  }
+
+  function getTouchDist(touches) {
+    const dx = touches[1].clientX - touches[0].clientX;
+    const dy = touches[1].clientY - touches[0].clientY;
+    return Math.sqrt(dx*dx + dy*dy);
+  }
+  function getTouchMid(touches, wrapper) {
+    const rect = wrapper.getBoundingClientRect();
+    return {
+      x: (touches[0].clientX + touches[1].clientX) / 2 - rect.left,
+      y: (touches[0].clientY + touches[1].clientY) / 2 - rect.top
+    };
+  }
+
+  function renderFloor() {
+    hidePopover(true);
+    const canvas = document.getElementById('floor-canvas');
+    canvas.querySelectorAll('.table-square').forEach(el => el.remove());
+    tableSquares.forEach(t => canvas.appendChild(createTableEl(t)));
+    initFloorViewport();
+    // Initialise la vue centrée la première fois
+    if (_vpX === 0 && _vpY === 0 && _vpScale === 1) {
+      setTimeout(floorResetView, 50);
+    }
+  }
+
+  // ── HOVER POPOVER ─────────────────────────────────────────────────
+  let _popoverEl       = null;  // DOM node du popover actif
+  let _popoverTableId  = null;  // id de la table dont le popover est ouvert
+  let _popoverHideTimer = null;
+
+  function showPopover(tableId, anchorEl) {
+    if (_popoverTableId === tableId && _popoverEl) return; // déjà affiché
+    hidePopover(true);
+
+    const t = tableSquares.find(x=>x.id===tableId); if (!t) return;
+    _popoverTableId = tableId;
+
+    const pop = document.createElement('div');
+    pop.className = 'table-popover';
+    pop.dataset.popover = tableId;
+    pop.innerHTML = buildPopoverHTML(t.num);
+
+    // Garder le popover ouvert si on le survole
+    pop.addEventListener('mouseenter', () => {
+      if (_popoverHideTimer) { clearTimeout(_popoverHideTimer); _popoverHideTimer = null; }
+    });
+    pop.addEventListener('mouseleave', () => scheduleHidePopover());
+
+    document.getElementById('floor-canvas').appendChild(pop);
+    _popoverEl = pop;
+
+    positionPopover(pop, anchorEl);
+    // Trigger animation
+    requestAnimationFrame(() => pop.classList.add('visible'));
+  }
+
+  function buildPopoverHTML(num) {
+    const tableSongs = songs.filter(s => String(s.table)===String(num));
+    const waitCount  = tableSongs.filter(s=>s.status==='wait').length;
+    const doneCount  = tableSongs.filter(s=>s.status==='done').length;
+
+    const pillsHTML = [
+      waitCount ? `<span class="popover-pill wait">⏳ ${waitCount}</span>` : '',
+      doneCount ? `<span class="popover-pill done">✔ ${doneCount}</span>`  : ''
+    ].join('');
+
+    let songsHTML = '';
+    if (!tableSongs.length) {
+      songsHTML = `<div class="popover-empty">Aucune chanson pour cette table</div>`;
+    } else {
+      // Grouper par chanteur (prénom)
+      const groups = {};
+      tableSongs.forEach(s => {
+        const key = (s.prenom || '—').trim();
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(s);
+      });
+      songsHTML = Object.entries(groups).map(([singer, sgs]) => {
+        const singerWait = sgs.filter(s=>s.status==='wait').length;
+        const singerDone = sgs.length - singerWait;
+        const pills = [
+          singerWait ? `<span class="popover-singer-pill wait">⏳${singerWait}</span>` : '',
+          singerDone ? `<span class="popover-singer-pill done">✔${singerDone}</span>`  : ''
+        ].join('');
+        const rows = sgs.map(s => `
+          <div class="popover-song status-${s.status}">
+            <div class="popover-song-row-info">
+              <div class="popover-song-title">🎵 ${esc(s.titre)} — ${esc(s.artiste)}</div>
+            </div>
+            ${popoverStatusBtn(s.id, s.status)}
+          </div>`).join('');
+        return `
+          <div class="popover-singer-group">
+            <div class="popover-singer-header">
+              <span class="popover-singer-name">🎤 ${esc(singer)}</span>
+              <span class="popover-singer-pills">${pills}</span>
+            </div>
+            ${rows}
+          </div>`;
+      }).join('');
+    }
+
+    return `
+      <div class="popover-header">
+        <span class="popover-title">TABLE ${esc(num)}</span>
+        <div class="popover-pills">${pillsHTML}</div>
+      </div>
+      <div class="popover-body">${songsHTML}</div>`;
+  }
+
+  function popoverStatusBtn(id, status) {
+    return status === 'wait'
+      ? `<button class="popover-status-btn wait" onclick="toggleStatusPopover('${id}')">⏳ En attente</button>`
+      : `<button class="popover-status-btn done" onclick="toggleStatusPopover('${id}')">✔ Chantée</button>`;
+  }
+
+  window.toggleStatusPopover = function(id) {
+    const s = songs.find(x=>x.id===id); if (!s) return;
+    s.status = s.status==='wait' ? 'done' : 'wait';
+    persistSongs(); render();
+    // Refresh popover in place
+    if (_popoverEl && _popoverTableId) {
+      const t = tableSquares.find(x=>x.id===_popoverTableId);
+      if (t) _popoverEl.innerHTML = buildPopoverHTML(t.num);
+    }
+  };
+
+  function positionPopover(pop, anchorEl) {
+    const wrapper  = document.getElementById('floor-canvas-wrapper');
+    const wrapperR = wrapper.getBoundingClientRect();
+    const anchorR  = anchorEl.getBoundingClientRect();
+    const popW = 280, popH = 320;
+
+    // Position de l'ancre en coordonnées wrapper
+    const anchorVisLeft = anchorR.left - wrapperR.left;
+    const anchorVisTop  = anchorR.top  - wrapperR.top;
+    const anchorW = anchorR.width, anchorH = anchorR.height;
+
+    // Le popover est positionné en coords canvas (avant transform),
+    // mais on veut qu'il reste visible dans le wrapper — on l'attache
+    // au canvas et on calcule sa position en coords canvas
+    const anchorCanvasLeft = anchorEl.offsetLeft;
+    const anchorCanvasTop  = anchorEl.offsetTop;
+
+    // Côté droit ou gauche selon l'espace visible
+    let x, y;
+    if (anchorVisLeft + anchorW * _vpScale + 14 + popW <= wrapperR.width) {
+      x = anchorCanvasLeft + (anchorW * _vpScale + 14) / _vpScale;
+    } else {
+      x = anchorCanvasLeft - (popW / _vpScale + 14);
+    }
+
+    // Vertical : aligner avec l'ancre, ajuster si ça dépasse
+    y = anchorCanvasTop;
+    const popHInCanvas = popH / _vpScale;
+    const bottomEdgeCanvas = (-_vpY + wrapperR.height) / _vpScale;
+    if (y + popHInCanvas > bottomEdgeCanvas - 8) {
+      y = Math.max(-_vpY / _vpScale + 4, bottomEdgeCanvas - popHInCanvas - 8);
+    }
+
+    // Appliquer un scale inverse pour que le popover garde une taille fixe malgré le zoom
+    pop.style.left      = Math.max(0, x) + 'px';
+    pop.style.top       = y + 'px';
+    pop.style.transform = `scale(${1 / _vpScale})`;
+    pop.style.transformOrigin = '0 0';
+    pop.style.width     = popW + 'px';
+  }
+
+  function scheduleHidePopover() {
+    _popoverHideTimer = setTimeout(() => hidePopover(), 300);
+  }
+
+  function hidePopover(immediate) {
+    if (_popoverHideTimer) { clearTimeout(_popoverHideTimer); _popoverHideTimer = null; }
+    if (!_popoverEl) return;
+    const el = _popoverEl;
+    _popoverEl      = null;
+    _popoverTableId = null;
+    if (immediate) { el.remove(); return; }
+    el.classList.remove('visible');
+    setTimeout(() => el.remove(), 200);
+  }
+
+  // ── CREATE TABLE ELEMENT ─────────────────────────────────────────
+  function createTableEl(t) {
+    const tableSongs = songs.filter(s => String(s.table) === String(t.num));
+    const waitCount  = tableSongs.filter(s=>s.status==='wait').length;
+
+    let badgeText='', badgeClass='empty';
+    if (tableSongs.length) {
+      if (waitCount>0) { badgeText=`${waitCount} en attente`; badgeClass='has-wait'; }
+      else             { badgeText='✔ Tout chanté';            badgeClass='all-done'; }
+    }
+
+    const textColor = colorLuminance(t.color) > 0.4 ? '#111' : '#fff';
+    const w = t.w || 86, h = t.h || 86;
+
+    const el = document.createElement('div');
+    el.className = 'table-square' + (selectedTableId===t.id?' selected':'');
+    el.dataset.id = t.id;
+    el.style.cssText = `left:${t.x}px;top:${t.y}px;width:${w}px;height:${h}px;background:${t.color};color:${textColor}`;
+    el.innerHTML = `
+      <div class="table-drag-handle" title="Maintenir pour déplacer">⠿</div>
+      <div class="table-num" style="font-size:${h>100?'2.4rem':'2.1rem'}">${esc(t.num)}</div>
+      <div class="table-badge ${badgeClass}">${tableSongs.length ? badgeText : 'vide'}</div>
+      <div class="table-resize-handle" title="Glisser pour redimensionner">▾▾</div>
+    `;
+
+    // ── Drag via poignée haut-droite ──────────────────────────────
+    const handle = el.querySelector('.table-drag-handle');
+    handle.addEventListener('mousedown',  e => startDragMouse(e, t.id));
+    handle.addEventListener('touchstart', e => startDragTouch(e, t.id), {passive:false});
+
+    // ── Resize via poignée bas-centre ─────────────────────────────
+    const rHandle = el.querySelector('.table-resize-handle');
+    rHandle.addEventListener('mousedown',  e => startResizeMouse(e, t.id));
+    rHandle.addEventListener('touchstart', e => startResizeTouch(e, t.id), {passive:false});
+
+    // ── Hover popover ──────────────────────────────────────────────
+    el.addEventListener('mouseenter', () => {
+      if (dragState || resizeState) return;
+      if (_popoverHideTimer) { clearTimeout(_popoverHideTimer); _popoverHideTimer = null; }
+      showPopover(t.id, el);
+    });
+    el.addEventListener('mouseleave', () => scheduleHidePopover());
+
+    // ── Clic pour sélectionner/désélectionner ─────────────────────
+    el.addEventListener('click', e => {
+      if (e.target.closest('.table-drag-handle') || e.target.closest('.table-resize-handle')) return;
+      selectedTableId = selectedTableId===t.id ? null : t.id;
+      document.getElementById('btn-delete-sel').style.display = selectedTableId ? '' : 'none';
+      renderFloor();
+    });
+
+    return el;
+  }
+
+  function colorLuminance(hex) {
+    const c = hex.replace('#','');
+    const r = parseInt(c.slice(0,2),16)/255;
+    const g = parseInt(c.slice(2,4),16)/255;
+    const b = parseInt(c.slice(4,6),16)/255;
+    return 0.2126*r + 0.7152*g + 0.0722*b;
+  }
+
+  // ── MODE ÉDITION (gardé pour compatibilité bouton toolbar) ────────
+  window.toggleEditMode = function() {
+    // Le mode edit n'est plus nécessaire pour déplacer,
+    // mais on garde le bouton supprimer accessible via sélection
+    selectedTableId = null;
+    document.getElementById('btn-delete-sel').style.display = 'none';
+    renderFloor();
+  };
+
+  window.deleteSelectedTable = function() {
+    if (!selectedTableId) return;
+    tableSquares = tableSquares.filter(t=>t.id!==selectedTableId);
+    selectedTableId = null;
+    document.getElementById('btn-delete-sel').style.display = 'none';
+    hidePopover(true);
+    persistTables(); renderFloor();
+    showToast('🗑️ Table supprimée');
+  };
+
+  // ── DRAG SOURIS (via poignée) ─────────────────────────────────────
+  function startDragMouse(e, tableId) {
+    e.preventDefault(); e.stopPropagation();
+    hidePopover(true);
+    const t = tableSquares.find(x=>x.id===tableId); if (!t) return;
+    const canvas = document.getElementById('floor-canvas');
+    dragState = { id: tableId, startX: e.clientX, startY: e.clientY, origX: t.x, origY: t.y };
+
+    const onMove = ev => {
+      if (!dragState) return;
+      const dx = (ev.clientX - dragState.startX) / _vpScale;
+      const dy = (ev.clientY - dragState.startY) / _vpScale;
+      const tbl = tableSquares.find(x=>x.id===dragState.id); if (!tbl) return;
+      tbl.x = Math.max(0, Math.min(canvas.offsetWidth-(tbl.w||86),  dragState.origX + dx));
+      tbl.y = Math.max(0, Math.min(canvas.offsetHeight-(tbl.h||86), dragState.origY + dy));
+      const el = canvas.querySelector(`.table-square[data-id="${tbl.id}"]`);
+      if (el) { el.style.left=tbl.x+'px'; el.style.top=tbl.y+'px'; }
+    };
+    const onUp = () => {
+      if (dragState) persistTables();
+      dragState = null;
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  }
+
+  // ── DRAG TOUCH (via poignée) ──────────────────────────────────────
+  function startDragTouch(e, tableId) {
+    e.preventDefault(); e.stopPropagation();
+    hidePopover(true);
+    const t = tableSquares.find(x=>x.id===tableId); if (!t) return;
+    const canvas = document.getElementById('floor-canvas');
+    const rect   = canvas.getBoundingClientRect();
+    const touch  = e.touches[0];
+    dragState = { id: tableId, startX: touch.clientX, startY: touch.clientY, origX: t.x, origY: t.y };
+
+    const onMove = ev => {
+      if (!dragState) return;
+      const tc = ev.touches[0];
+      const dx = (tc.clientX - dragState.startX) / _vpScale;
+      const dy = (tc.clientY - dragState.startY) / _vpScale;
+      const tbl = tableSquares.find(x=>x.id===dragState.id); if (!tbl) return;
+      tbl.x = Math.max(0, Math.min(canvas.offsetWidth-(tbl.w||86),  dragState.origX + dx));
+      tbl.y = Math.max(0, Math.min(canvas.offsetHeight-(tbl.h||86), dragState.origY + dy));
+      const el = canvas.querySelector(`.table-square[data-id="${tbl.id}"]`);
+      if (el) { el.style.left=tbl.x+'px'; el.style.top=tbl.y+'px'; }
+    };
+    const onEnd = () => {
+      if (dragState) persistTables();
+      dragState = null;
+      window.removeEventListener('touchmove', onMove);
+      window.removeEventListener('touchend', onEnd);
+    };
+    window.addEventListener('touchmove', onMove, {passive:false});
+    window.addEventListener('touchend', onEnd);
+  }
+
+  // ── RESIZE SOURIS ─────────────────────────────────────────────────
+  let resizeState = null;
+
+  function startResizeMouse(e, tableId) {
+    e.preventDefault(); e.stopPropagation();
+    hidePopover(true);
+    const t = tableSquares.find(x=>x.id===tableId); if (!t) return;
+    resizeState = { id: tableId, startY: e.clientY, origH: t.h || 86 };
+
+    const onMove = ev => {
+      if (!resizeState) return;
+      const dy = (ev.clientY - resizeState.startY) / _vpScale;
+      const tbl = tableSquares.find(x=>x.id===resizeState.id); if (!tbl) return;
+      tbl.h = Math.max(60, Math.min(400, resizeState.origH + dy));
+      const el = document.querySelector(`.table-square[data-id="${tbl.id}"]`);
+      if (el) el.style.height = tbl.h + 'px';
+    };
+    const onUp = () => {
+      if (resizeState) persistTables();
+      resizeState = null;
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  }
+
+  // ── RESIZE TOUCH ──────────────────────────────────────────────────
+  function startResizeTouch(e, tableId) {
+    e.preventDefault(); e.stopPropagation();
+    hidePopover(true);
+    const t = tableSquares.find(x=>x.id===tableId); if (!t) return;
+    const touch = e.touches[0];
+    resizeState = { id: tableId, startY: touch.clientY, origH: t.h || 86 };
+
+    const onMove = ev => {
+      if (!resizeState) return;
+      const tc = ev.touches[0];
+      const dy = (tc.clientY - resizeState.startY) / _vpScale;
+      const tbl = tableSquares.find(x=>x.id===resizeState.id); if (!tbl) return;
+      tbl.h = Math.max(60, Math.min(400, resizeState.origH + dy));
+      const el = document.querySelector(`.table-square[data-id="${tbl.id}"]`);
+      if (el) el.style.height = tbl.h + 'px';
+    };
+    const onEnd = () => {
+      if (resizeState) persistTables();
+      resizeState = null;
+      window.removeEventListener('touchmove', onMove);
+      window.removeEventListener('touchend', onEnd);
+    };
+    window.addEventListener('touchmove', onMove, {passive:false});
+    window.addEventListener('touchend', onEnd);
+  }
+
+  // ── AJOUTER TABLE (modal) ─────────────────────────────────────────
+  window.openAddTable = function() {
+    document.getElementById('new-table-num').value = '';
+    buildColorGrid();
+    document.getElementById('modal-add-table').classList.add('active');
+  };
+  window.closeAddTable = function() { document.getElementById('modal-add-table').classList.remove('active'); };
+
+  function buildColorGrid() {
+    const grid = document.getElementById('color-grid');
+    grid.innerHTML = TABLE_COLORS.map(c => `
+      <div class="color-swatch ${c===newTableColor?'selected':''}"
+           style="background:${c}"
+           onclick="selectColor('${c}')"></div>`).join('');
+  }
+
+  window.selectColor = function(c) {
+    newTableColor = c;
+    buildColorGrid();
+  };
+
+  window.confirmAddTable = function() {
+    const num = document.getElementById('new-table-num').value.trim();
+    if (!num) { showToast('⚠️ Entrez un numéro de table'); return; }
+    const id  = Date.now().toString(36)+Math.random().toString(36).slice(2,4);
+    // Place au centre du canvas logique (3000×2200) avec légère variation aléatoire
+    const x = 1400 + Math.round((Math.random() - 0.5) * 200);
+    const y = 1000 + Math.round((Math.random() - 0.5) * 200);
+    tableSquares.push({ id, num, color: newTableColor, x, y, w: 86, h: 86 });
+    persistTables(); renderFloor();
+    floorResetView(); // recentre sur les tables
+    closeAddTable();
+    showToast(`✅ Table ${num} ajoutée`);
+  };
+
+  // ── DÉTAIL TABLE (modal) ──────────────────────────────────────────
+  let _openDetailNum = null;
+
+  function openTableDetail(num) {
+    _openDetailNum = num;
+    renderTableDetail(num);
+    document.getElementById('modal-table-detail').classList.add('active');
+  }
+
+  function renderTableDetail(num) {
+    document.getElementById('modal-table-title').textContent = `TABLE ${num}`;
+    const tableSongs = songs.filter(s => String(s.table)===String(num));
+    const cont = document.getElementById('modal-table-songs');
+    if (!tableSongs.length) {
+      cont.innerHTML = `<div class="empty-state" style="padding:24px"><div class="icon">🎵</div><p>Aucune chanson associée à cette table.</p></div>`;
+      return;
+    }
+    cont.innerHTML = tableSongs.map(s => `
+      <div class="modal-song-row status-${s.status}">
+        <div>
+          <div class="modal-song-singer">🎤 ${esc(s.prenom)}</div>
+          <div class="modal-song-title">🎵 ${esc(s.titre)} — ${esc(s.artiste)}</div>
+          <div style="font-size:.75rem;color:var(--muted);margin-top:2px">${s.time}</div>
+        </div>
+        ${rowStatusBtnHTML(s.id, s.status)}
+      </div>`).join('');
+  }
+
+  window.closeTableDetail = function() {
+    document.getElementById('modal-table-detail').classList.remove('active');
+    _openDetailNum = null;
+  };
+
+  // ── DRAG & DROP LISTE ─────────────────────────────────────────────
+  let dragSrcIndex = null;
   function initDnD() {
     document.querySelectorAll('#song-list .song-item').forEach(el => {
-      el.addEventListener('dragstart', onDragStart);
-      el.addEventListener('dragover',  onDragOver);
-      el.addEventListener('dragleave', onDragLeave);
-      el.addEventListener('drop',      onDrop);
-      el.addEventListener('dragend',   onDragEnd);
-      el.addEventListener('touchstart', onTouchStart, { passive: true });
-      el.addEventListener('touchmove',  onTouchMove,  { passive: false });
+      el.addEventListener('dragstart', e => { dragSrcIndex=+e.currentTarget.dataset.index; e.currentTarget.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; });
+      el.addEventListener('dragover',  e => { e.preventDefault(); e.currentTarget.classList.add('drag-over'); });
+      el.addEventListener('dragleave', e => e.currentTarget.classList.remove('drag-over'));
+      el.addEventListener('drop', e => {
+        e.preventDefault(); const ti=+e.currentTarget.dataset.index; e.currentTarget.classList.remove('drag-over');
+        if (dragSrcIndex===null||dragSrcIndex===ti) return;
+        songs.splice(ti,0,songs.splice(dragSrcIndex,1)[0]);
+        persistSongs(); renderList(); updateBadge();
+      });
+      el.addEventListener('dragend', e => { e.currentTarget.classList.remove('dragging'); document.querySelectorAll('.drag-over').forEach(x=>x.classList.remove('drag-over')); dragSrcIndex=null; });
+      // Touch
+      el.addEventListener('touchstart', onTouchStart, {passive:true});
+      el.addEventListener('touchmove',  onTouchMove,  {passive:false});
       el.addEventListener('touchend',   onTouchEnd);
     });
   }
-  function onDragStart(e) { dragSrcIndex = +e.currentTarget.dataset.index; e.currentTarget.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; }
-  function onDragOver(e)  { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
-  function onDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
-  function onDrop(e) {
-    e.preventDefault(); const ti = +e.currentTarget.dataset.index; e.currentTarget.classList.remove('drag-over');
-    if (dragSrcIndex===null||dragSrcIndex===ti) return;
-    songs.splice(ti, 0, songs.splice(dragSrcIndex,1)[0]);
-    persistToFirebase(); renderList(); updateBadge();
-  }
-  function onDragEnd(e) { e.currentTarget.classList.remove('dragging'); document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over')); dragSrcIndex=null; }
-
-  let tEl=null, tIdx=null, tClone=null, tOffY=0;
+  let tEl=null,tIdx=null,tClone=null,tOffY=0;
   function onTouchStart(e) {
     if (!e.target.closest('.drag-handle')) return;
     tEl=e.currentTarget; tIdx=+tEl.dataset.index;
     const r=tEl.getBoundingClientRect(); tOffY=e.touches[0].clientY-r.top;
     tClone=tEl.cloneNode(true);
-    Object.assign(tClone.style,{ position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',opacity:'0.7',zIndex:'9999',pointerEvents:'none',border:'2px solid var(--accent)',borderRadius:'var(--radius)',background:'var(--bg3)' });
+    Object.assign(tClone.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',opacity:'0.7',zIndex:'9999',pointerEvents:'none',border:'2px solid var(--accent)',borderRadius:'var(--radius)',background:'var(--bg3)'});
     document.body.appendChild(tClone); tEl.classList.add('dragging');
   }
   function onTouchMove(e) {
     if (!tClone) return; e.preventDefault();
     tClone.style.top=(e.touches[0].clientY-tOffY)+'px';
-    document.querySelectorAll('.song-item').forEach(el=>el.classList.remove('drag-over'));
-    const over=document.elementsFromPoint(e.touches[0].clientX,e.touches[0].clientY).find(el=>el.classList.contains('song-item')&&el!==tEl);
+    document.querySelectorAll('.song-item').forEach(x=>x.classList.remove('drag-over'));
+    const over=document.elementsFromPoint(e.touches[0].clientX,e.touches[0].clientY).find(x=>x.classList.contains('song-item')&&x!==tEl);
     if (over) over.classList.add('drag-over');
   }
   function onTouchEnd() {
     if (!tClone) return;
     tClone.remove(); tClone=null; tEl.classList.remove('dragging');
     const over=document.querySelector('.song-item.drag-over');
-    if (over) { over.classList.remove('drag-over'); const ti=+over.dataset.index; if(tIdx!==null&&tIdx!==ti){ songs.splice(ti,0,songs.splice(tIdx,1)[0]); persistToFirebase(); renderList(); updateBadge(); } }
+    if (over) { over.classList.remove('drag-over'); const ti=+over.dataset.index; if(tIdx!==null&&tIdx!==ti){ songs.splice(ti,0,songs.splice(tIdx,1)[0]); persistSongs(); renderList(); updateBadge(); } }
     tEl=null; tIdx=null;
   }
 
-  // ── AJOUT ────────────────────────────────────────────────────────
+  // ── AJOUT CHANSON ─────────────────────────────────────────────────
   window.addSongManual = function() {
     const prenom=v('inp-prenom'),artiste=v('inp-artiste'),titre=v('inp-titre'),table=v('inp-table');
     if (!prenom&&!titre){ showToast('⚠️ Remplis au moins le prénom ou le titre'); return; }
@@ -764,18 +1727,60 @@
   };
 
   function addSong({prenom,artiste,titre,table}) {
-    const song = {
-      id: Date.now().toString(36)+Math.random().toString(36).slice(2,5),
-      prenom:prenom||'', artiste:artiste||'', titre:titre||'', table:table||'',
-      status:'wait', time: new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),
-      order: songs.length
-    };
-    songs.push(song);
-    persistToFirebase();
-    render();
+    songs.push({ id:Date.now().toString(36)+Math.random().toString(36).slice(2,5), prenom:prenom||'', artiste:artiste||'', titre:titre||'', table:table||'', status:'wait', time:new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}), order:songs.length });
+    // Créer automatiquement la table dans le canvas si elle n'existe pas encore
+    if (table && !tableSquares.find(t => String(t.num)===String(table))) {
+      autoCreateTableSquare(table);
+    }
+    persistSongs(); render();
   }
 
-  // ── ÉDITION ──────────────────────────────────────────────────────
+  // Crée une table dans le canvas, centrée, sans chevauchement
+  function autoCreateTableSquare(num) {
+    const CANVAS_W = 3000, CANVAS_H = 2200;
+    const W = 86, H = 86, MARGIN = 20;
+    const color = TABLE_COLORS[tableSquares.length % TABLE_COLORS.length];
+    const id    = Date.now().toString(36) + Math.random().toString(36).slice(2,4);
+
+    // Cherche une position libre en partant du centre, en spirale
+    let x = Math.round(CANVAS_W/2 - W/2);
+    let y = Math.round(CANVAS_H/2 - H/2);
+    const step = W + MARGIN;
+    let placed = false;
+
+    outer: for (let radius = 0; radius <= 12; radius++) {
+      const candidates = radius === 0
+        ? [[x, y]]
+        : generateSpiralRing(x, y, radius, step);
+      for (const [cx, cy] of candidates) {
+        const bx = Math.max(0, Math.min(CANVAS_W-W, cx));
+        const by = Math.max(0, Math.min(CANVAS_H-H, cy));
+        const overlaps = tableSquares.some(t => {
+          const tw=t.w||86, th=t.h||86;
+          return !(bx+W+MARGIN <= t.x || bx >= t.x+tw+MARGIN || by+H+MARGIN <= t.y || by >= t.y+th+MARGIN);
+        });
+        if (!overlaps) { x=bx; y=by; placed=true; break outer; }
+      }
+    }
+
+    tableSquares.push({ id, num, color, x, y, w: W, h: H });
+    persistTables();
+    showToast(`🍽️ Table ${num} créée automatiquement`);
+  }
+
+  function generateSpiralRing(cx, cy, radius, step) {
+    const pts = [];
+    for (let dx=-radius; dx<=radius; dx++) {
+      for (let dy=-radius; dy<=radius; dy++) {
+        if (Math.abs(dx)===radius || Math.abs(dy)===radius) {
+          pts.push([cx + dx*step, cy + dy*step]);
+        }
+      }
+    }
+    return pts;
+  }
+
+  // ── ÉDITION ───────────────────────────────────────────────────────
   window.openEdit = function(id) {
     const s=songs.find(x=>x.id===id); if(!s) return;
     document.getElementById('edit-id').value=id;
@@ -785,107 +1790,265 @@
     document.getElementById('edit-table').value=s.table;
     document.getElementById('modal-edit').classList.add('active');
   };
-  window.closeEdit = function() { document.getElementById('modal-edit').classList.remove('active'); };
-  window.saveEdit  = function() {
+  window.closeEdit = function(){ document.getElementById('modal-edit').classList.remove('active'); };
+  window.saveEdit  = function(){
     const id=document.getElementById('edit-id').value;
     const s=songs.find(x=>x.id===id); if(!s) return;
-    s.prenom=v('edit-prenom'); s.artiste=v('edit-artiste');
-    s.titre=v('edit-titre');   s.table=v('edit-table');
-    persistToFirebase(); render(); closeEdit();
-    showToast('✏️ Demande modifiée');
+    s.prenom=v('edit-prenom'); s.artiste=v('edit-artiste'); s.titre=v('edit-titre'); s.table=v('edit-table');
+    // Auto-créer la table si nouvelle
+    if (s.table && !tableSquares.find(t => String(t.num)===String(s.table))) {
+      autoCreateTableSquare(s.table);
+    }
+    persistSongs(); render(); closeEdit(); showToast('✏️ Demande modifiée');
   };
 
-  // ── SUPPRESSION ──────────────────────────────────────────────────
-  window.deleteSong = function(id) {
-    songs = songs.filter(x=>x.id!==id);
-    persistToFirebase(); render(); showToast('🗑️ Demande supprimée');
+  window.deleteSong = function(id){ songs=songs.filter(x=>x.id!==id); persistSongs(); render(); showToast('🗑️ Demande supprimée'); };
+  window.cleanDone  = function(){
+    const n=songs.filter(s=>s.status==='done').length; songs=songs.filter(s=>s.status!=='done');
+    persistSongs(); render(); showToast(n>0?`🧹 ${n} demande(s) supprimée(s)`:'Aucune chantée à supprimer');
   };
 
-  // ── NETTOYAGE ─────────────────────────────────────────────────────
-  window.cleanDone = function() {
-    const n=songs.filter(s=>s.status==='done').length;
-    songs=songs.filter(s=>s.status!=='done');
-    persistToFirebase(); render();
-    showToast(n>0?`🧹 ${n} demande(s) supprimée(s)`:'Aucune chantée à supprimer');
-  };
+  // ── SCAN MULTI-BLOCS ──────────────────────────────────────────────
+  let _scanBlocks   = [];  // [{ id, prenom, artiste, titre, table, validated }]
+  let _scanThumbSrc = '';
 
-  // ── SCAN IA ───────────────────────────────────────────────────────
   window.handleImageSelected = function(event) {
-    const file=event.target.files[0]; if(!file) return;
-    ['scan-error','scan-form','scan-loading'].forEach(id=>document.getElementById(id).style.display='none');
-    const reader=new FileReader();
-    reader.onload=e=>{
-      const[,b64]=e.target.result.split(',');
-      document.getElementById('scan-img').src=e.target.result;
-      document.getElementById('scan-preview').style.display='block';
-      pendingImageBase64=b64; pendingImageType=file.type||'image/jpeg';
-      analyzeImageWithAI(b64,pendingImageType);
+    const file = event.target.files[0]; if (!file) return;
+    document.getElementById('scan-error').style.display = 'none';
+    document.getElementById('scan-loading').style.display = 'block';
+
+    const reader = new FileReader();
+    reader.onload = e => {
+      _scanThumbSrc = e.target.result;
+      const [, b64] = e.target.result.split(',');
+      analyzeImageWithAI(b64, file.type || 'image/jpeg');
     };
-    reader.readAsDataURL(file); event.target.value='';
+    reader.readAsDataURL(file);
+    event.target.value = '';
   };
 
-  async function analyzeImageWithAI(b64,mime) {
-    const key=localStorage.getItem('anthropic_api_key');
-    if(!key){ showScanError('🔑 Clé API manquante. Appuyez sur ⚙️.'); return; }
-    document.getElementById('scan-loading').style.display='block';
-    document.getElementById('scan-form').style.display='none';
-    document.getElementById('scan-error').style.display='none';
+  async function analyzeImageWithAI(b64, mime) {
+    const key = localStorage.getItem('anthropic_api_key');
+    if (!key) {
+      document.getElementById('scan-loading').style.display = 'none';
+      showScanError('🔑 Clé API manquante. Appuyez sur ⚙️.');
+      return;
+    }
+
+    const PROMPT = `Tu es un assistant de lecture de bons karaoké.
+Analyse cette photo d'un bon papier rempli à la main.
+Le bon peut contenir UNE OU PLUSIEURS demandes de chansons.
+Pour chaque demande détectée, extrais : prénom du chanteur, artiste, titre de la chanson, numéro de table.
+Réponds UNIQUEMENT avec un tableau JSON valide, sans texte autour, sous cette forme exacte :
+[
+  { "prenom": "", "artiste": "", "titre": "", "table": "" },
+  { "prenom": "", "artiste": "", "titre": "", "table": "" }
+]
+Si une information est illisible ou absente, laisse la valeur vide "".
+Même s'il n'y a qu'une seule demande, réponds toujours avec un tableau.`;
+
     try {
-      const resp=await fetch('https://api.anthropic.com/v1/messages',{
-        method:'POST',
-        headers:{'x-api-key':key,'anthropic-version':'2023-06-01','content-type':'application/json','anthropic-dangerous-direct-browser-access':'true'},
-        body:JSON.stringify({
-          model:'claude-sonnet-4-20250514',max_tokens:300,
-          messages:[{role:'user',content:[
-            {type:'image',source:{type:'base64',media_type:mime,data:b64}},
-            {type:'text',text:'Tu es un assistant de lecture de bons karaoké. Analyse cette photo d\'un bon papier rempli à la main. Extrait les informations suivantes si présentes : prénom, artiste, titre de la chanson, numéro de table. Réponds UNIQUEMENT en JSON valide, sans texte autour, avec exactement ces clés : { "prenom": "", "artiste": "", "titre": "", "table": "" }. Si une information est illisible ou absente, laisse la valeur vide.'}
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'x-api-key': key,
+          'anthropic-version': '2023-06-01',
+          'content-type': 'application/json',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 800,
+          messages: [{ role: 'user', content: [
+            { type: 'image', source: { type: 'base64', media_type: mime, data: b64 } },
+            { type: 'text', text: PROMPT }
           ]}]
         })
       });
-      document.getElementById('scan-loading').style.display='none';
-      if(!resp.ok){const e=await resp.json().catch(()=>({}));showScanError(`❌ Erreur API : ${e?.error?.message||resp.status}`);return;}
-      const data=await resp.json();
-      const raw=(data.content?.[0]?.text||'').replace(/```json|```/gi,'').trim();
-      let ex; try{ex=JSON.parse(raw);}catch{showScanError('⚠️ Réponse IA illisible. Essayez une photo plus nette.');return;}
-      document.getElementById('scan-prenom').value=ex.prenom||'';
-      document.getElementById('scan-artiste').value=ex.artiste||'';
-      document.getElementById('scan-titre').value=ex.titre||'';
-      document.getElementById('scan-table').value=ex.table||'';
-      document.getElementById('scan-form').style.display='block';
-    } catch(e){
-      document.getElementById('scan-loading').style.display='none';
+
+      document.getElementById('scan-loading').style.display = 'none';
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        showScanError(`❌ Erreur API : ${err?.error?.message || resp.status}`);
+        return;
+      }
+
+      const data  = await resp.json();
+      const raw   = (data.content?.[0]?.text || '').replace(/```json|```/gi, '').trim();
+      let parsed;
+      try { parsed = JSON.parse(raw); } catch {
+        showScanError('⚠️ Réponse IA illisible. Essayez une photo plus nette.');
+        return;
+      }
+
+      // Normalise : accepte objet unique ou tableau
+      const items = Array.isArray(parsed) ? parsed : [parsed];
+      if (!items.length) { showScanError('⚠️ Aucune demande détectée sur ce bon.'); return; }
+
+      // Ouvrir la modale avec les blocs
+      openScanModal(items);
+
+    } catch (e) {
+      document.getElementById('scan-loading').style.display = 'none';
       showScanError(`🌐 Connexion impossible. ${e.message}`);
     }
   }
 
-  function showScanError(msg){const el=document.getElementById('scan-error');el.textContent=msg;el.style.display='block';}
+  function showScanError(msg) {
+    const el = document.getElementById('scan-error');
+    el.textContent = msg; el.style.display = 'block';
+  }
 
-  window.confirmScanAdd=function(){
-    const prenom=v('scan-prenom'),artiste=v('scan-artiste'),titre=v('scan-titre'),table=v('scan-table');
-    if(!prenom&&!titre){showToast('⚠️ Remplis au moins le prénom ou le titre');return;}
-    addSong({prenom,artiste,titre,table}); cancelScan(); showToast('✅ Bon ajouté depuis la photo !');
-  };
-  window.cancelScan=function(){
-    ['scan-preview','scan-form','scan-error','scan-loading'].forEach(id=>document.getElementById(id).style.display='none');
-    pendingImageBase64=null;
+  // ── MODALE SCAN ───────────────────────────────────────────────────
+  function openScanModal(items) {
+    _scanBlocks = items.map((item, i) => ({
+      id: 'sb' + Date.now() + i,
+      prenom:    item.prenom  || '',
+      artiste:   item.artiste || '',
+      titre:     item.titre   || '',
+      table:     item.table   || '',
+      validated: false
+    }));
+
+    document.getElementById('scan-thumb').src = _scanThumbSrc;
+    renderScanBlocks();
+    document.getElementById('modal-scan').classList.add('active');
+  }
+
+  window.closeScanModal = function() {
+    document.getElementById('modal-scan').classList.remove('active');
+    _scanBlocks = [];
   };
 
-  // ── PARAMÈTRES ───────────────────────────────────────────────────
+  function renderScanBlocks() {
+    const container = document.getElementById('scan-blocks-container');
+    container.innerHTML = _scanBlocks.map((b, i) => `
+      <div class="scan-block ${b.validated ? 'validated' : ''}" id="block-${b.id}">
+        <div class="scan-block-header">
+          <span class="scan-block-num">Musique ${i + 1}</span>
+          <div class="scan-block-actions">
+            <button class="scan-validate-btn confirm ${b.validated ? 'done' : ''}"
+                    onclick="toggleScanBlock('${b.id}')">
+              ${b.validated ? '✔ Validée' : '✔ Valider'}
+            </button>
+            <button class="scan-validate-btn remove" onclick="removeScanBlock('${b.id}')">✕</button>
+          </div>
+        </div>
+        <div class="scan-block-body">
+          <div class="form-grid">
+            <div class="autocomplete-wrap">
+              <label>Prénom</label>
+              <input type="text" value="${escAttr(b.prenom)}" placeholder="Prénom"
+                     oninput="updateScanBlock('${b.id}','prenom',this.value); acInput(this,'ac-sb-${b.id}-prenom')"
+                     onkeydown="acKey(event,'ac-sb-${b.id}-prenom')"
+                     onblur="acBlur('ac-sb-${b.id}-prenom')"
+                     autocomplete="off" />
+              <div id="ac-sb-${b.id}-prenom" class="autocomplete-list" style="display:none"></div>
+            </div>
+            <div class="autocomplete-wrap">
+              <label>N° Table</label>
+              <input type="text" value="${escAttr(b.table)}" placeholder="Table"
+                     oninput="updateScanBlock('${b.id}','table',this.value); acInput(this,'ac-sb-${b.id}-table','table')"
+                     onkeydown="acKey(event,'ac-sb-${b.id}-table')"
+                     onblur="acBlur('ac-sb-${b.id}-table')"
+                     autocomplete="off" />
+              <div id="ac-sb-${b.id}-table" class="autocomplete-list" style="display:none"></div>
+            </div>
+            <div>
+              <label>Artiste</label>
+              <input type="text" value="${escAttr(b.artiste)}" placeholder="Artiste"
+                     oninput="updateScanBlock('${b.id}','artiste',this.value)" autocomplete="off" />
+            </div>
+            <div>
+              <label>Titre</label>
+              <input type="text" value="${escAttr(b.titre)}" placeholder="Titre"
+                     oninput="updateScanBlock('${b.id}','titre',this.value)" autocomplete="off" />
+            </div>
+          </div>
+        </div>
+      </div>`).join('') +
+      `<button class="scan-add-block-btn" onclick="scanAddBlock()">＋ Ajouter un bloc manuellement</button>`;
+  }
+
+  // Échappe les attributs HTML
+  function escAttr(s) {
+    return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  window.updateScanBlock = function(id, field, val) {
+    const b = _scanBlocks.find(x => x.id === id); if (!b) return;
+    b[field] = val;
+  };
+
+  window.toggleScanBlock = function(id) {
+    const b = _scanBlocks.find(x => x.id === id); if (!b) return;
+    b.validated = !b.validated;
+    const blockEl = document.getElementById('block-' + id);
+    if (!blockEl) return;
+    blockEl.classList.toggle('validated', b.validated);
+    const btn = blockEl.querySelector('.scan-validate-btn.confirm');
+    if (btn) { btn.classList.toggle('done', b.validated); btn.textContent = b.validated ? '✔ Validée' : '✔ Valider'; }
+  };
+
+  window.removeScanBlock = function(id) {
+    _scanBlocks = _scanBlocks.filter(x => x.id !== id);
+    renderScanBlocks();
+  };
+
+  window.scanAddBlock = function() {
+    _scanBlocks.push({
+      id: 'sb' + Date.now(),
+      prenom: '', artiste: '', titre: '', table: '',
+      validated: false
+    });
+    renderScanBlocks();
+    // Scroll vers le bas
+    const c = document.getElementById('scan-blocks-container');
+    setTimeout(() => c.scrollTo({ top: c.scrollHeight, behavior: 'smooth' }), 50);
+  };
+
+  window.confirmAllScanBlocks = function() {
+    // Valider tous les blocs non supprimés qui ont au moins prénom ou titre
+    const toAdd = _scanBlocks.filter(b => b.prenom || b.titre);
+    if (!toAdd.length) { showToast('⚠️ Aucun bloc à ajouter'); return; }
+
+    toAdd.forEach(b => addSong({
+      prenom:  b.prenom,
+      artiste: b.artiste,
+      titre:   b.titre,
+      table:   b.table
+    }));
+
+    closeScanModal();
+    showToast(`✅ ${toAdd.length} demande${toAdd.length > 1 ? 's' : ''} ajoutée${toAdd.length > 1 ? 's' : ''} !`);
+  };
+
+  window.scanZoomThumb = function() {
+    if (!_scanThumbSrc) return;
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:2000;display:flex;align-items:center;justify-content:center;cursor:zoom-out';
+    const img = document.createElement('img');
+    img.src = _scanThumbSrc;
+    img.style.cssText = 'max-width:95%;max-height:95%;border-radius:10px;object-fit:contain';
+    overlay.appendChild(img);
+    overlay.onclick = () => overlay.remove();
+    document.body.appendChild(overlay);
+  };
+
+  // ── PARAMÈTRES ────────────────────────────────────────────────────
   window.openSettings=function(){
     document.getElementById('input-apikey').value=localStorage.getItem('anthropic_api_key')||'';
-    document.getElementById('input-dburl').value=localStorage.getItem('karotrum_dburl')||'';
-    const hasKey=!!localStorage.getItem('anthropic_api_key');
-    document.getElementById('btn-cancel-modal').style.display=hasKey?'':'none';
+    document.getElementById('input-dburl').value=localStorage.getItem('karatrum_dburl')||'';
+    document.getElementById('btn-cancel-modal').style.display=localStorage.getItem('anthropic_api_key')?'':'none';
     document.getElementById('modal-api').classList.add('active');
   };
   window.closeSettings=function(){document.getElementById('modal-api').classList.remove('active');};
   window.saveSettings=function(){
-    const apiKey=v('input-apikey');
-    const dbUrl=v('input-dburl');
+    const apiKey=v('input-apikey'), dbUrl=v('input-dburl');
     if(apiKey) localStorage.setItem('anthropic_api_key',apiKey);
-    if(dbUrl)  localStorage.setItem('karotrum_dburl',dbUrl);
-    closeSettings();
-    showToast('✅ Paramètres enregistrés — rechargement…');
+    if(dbUrl)  localStorage.setItem('karatrum_dburl',dbUrl);
+    closeSettings(); showToast('✅ Paramètres enregistrés — rechargement…');
     setTimeout(()=>location.reload(),1200);
   };
 
@@ -896,23 +2059,13 @@
     if(_tt)clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2600);
   };
 
-  // ── UTILS ──────────────────────────────────────────────────────────
   function v(id){return(document.getElementById(id).value||'').trim();}
 
-  // ── OFFLINE DETECTION ─────────────────────────────────────────────
-  window.addEventListener('offline',()=>{
-    document.getElementById('offline-banner').style.display='block';
-    setSyncStatus('error','Hors ligne');
-  });
-  window.addEventListener('online',()=>{
-    document.getElementById('offline-banner').style.display='none';
-    setSyncStatus('synced','Reconnecté');
-  });
+  window.addEventListener('offline',()=>{ document.getElementById('offline-banner').style.display='block'; setSyncStatus('error','Hors ligne'); });
+  window.addEventListener('online', ()=>{ document.getElementById('offline-banner').style.display='none';  setSyncStatus('synced','Reconnecté'); });
 
   // ── INIT ──────────────────────────────────────────────────────────
   initFirebase();
-
-  // Premier lancement : ouvrir paramètres si pas de clé API
   if(!localStorage.getItem('anthropic_api_key')){
     document.getElementById('btn-cancel-modal').style.display='none';
     document.getElementById('modal-api').classList.add('active');
